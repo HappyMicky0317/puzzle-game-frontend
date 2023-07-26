@@ -1,0 +1,13 @@
+.inner-explaination{
+    text-align: center;
+}
+.main-description{
+    margin: 40px 70px;
+    background-color: #000;
+    border-radius: 30px;
+    padding: 40px 30px;
+}
+.description{
+    text-align: left;
+    color: #18ce2e;
+}

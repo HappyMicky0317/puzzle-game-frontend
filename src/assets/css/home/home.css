@@ -1,0 +1,19 @@
+.inside-home {
+  background-color: #fff;
+  padding: 100px 40px 150px 40px;
+}
+.header-title{
+
+}
+.play-link{
+  color: black;
+  margin-top: 50px;
+}
+.dice-img{
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+.play-link:hover{
+  text-decoration: none;
+  color: black;
+}

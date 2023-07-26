@@ -1,0 +1,12 @@
+.content-footer {
+  background-color: #000;
+  padding: 20px 190px;
+  padding-bottom: 25px;
+}
+.meta {
+  display: flex;
+}
+.copyright{
+  color: white;
+  margin-bottom: 0;
+}

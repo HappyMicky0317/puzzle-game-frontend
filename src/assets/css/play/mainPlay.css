@@ -1,0 +1,129 @@
+.mainplay-content{
+    background-color: #fff;
+    padding: 30px 40px 50px 40px;
+}
+.mainPlay-inner{
+    display: flex;
+    padding: 30px 50px 30px 10px;
+}
+.main-left{
+    width: 20%;
+    padding-top: 20px;
+    text-align: center;
+}
+.bonusQ-header{
+    background-color: #18ce2e;
+    border: solid 3px #000;
+    border-radius: 10px;
+    padding: 5px 15px;
+    width: fit-content;
+    margin: auto;
+    margin-top: 10px;
+
+}
+.bonus-cluses-container{
+    margin-top: 20px;
+}
+.per-clues{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.category-container{
+    background-color: #d9f3e4;
+    border: solid 2px #000;
+    border-radius: 10px;
+    width: 80%;
+    padding: 20px 10px 20px 10px;
+}
+.category-top{
+    display: flex;
+}
+.main-right{
+    width: 80%;
+    text-align: center;
+}
+.timer-container{
+    text-align: center;
+}
+.timer-head{
+   background-color: #000;
+   color: #18ce2e;
+   width: fit-content;
+   padding: 10px 40px;
+   font-weight: bold;
+   font-size: 30px;
+   margin: auto;
+}
+.timer{
+    display:flex;
+    margin: auto;
+    margin-top: 10px;
+    justify-content: center;
+}
+.time-panel{
+    width:40px;
+    height:40px;
+    background-color: #000;
+    color: #fbfbfb;
+    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.asking-container{
+    background-color: #d9f3e4;
+    border: solid 2px #000;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 20px 40px 20px 40px;
+    margin: auto;
+    margin-top: 30px;
+    display: inline-block;
+}
+.question-input{
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    font-size: 17px;
+}
+.question-input:focus{
+    outline: none;
+}
+.ask-btn{
+    text-align: end;
+    cursor: pointer;
+}
+.asking-num{
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 50px;
+}
+.questions-container{
+    display: flex;
+    padding: 30px 50px;
+}
+.questions-container-inner{
+    border: solid 3px #000;
+    border-radius: 30px;
+    padding: 10px 10px;
+    width: 49%;
+    padding:0px 30px;
+    background-color: #f3f3f3;
+}
+.questions-container-padding{
+    width:2%
+}
+.answer-container{
+    background-color: #d9f3e4;
+    border: solid 2px #000;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 20px 40px 20px 40px;
+    margin: auto;
+    margin-top: 30px;
+    display: inline-block;
+}
+.answers{
+    display: flex;
+}
