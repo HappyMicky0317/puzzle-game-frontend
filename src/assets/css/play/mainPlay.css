@@ -93,6 +93,15 @@
 .ask-btn{
     text-align: end;
     cursor: pointer;
+    width: fit-content;
+    align-self: end !important;
+    float: right;
+}
+.warning-content{
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-left: -100px;
 }
 .asking-num{
     display: inline-block;

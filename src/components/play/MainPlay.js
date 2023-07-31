@@ -13,6 +13,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function MainPlay() {
+    const [inputValudate, setInputValudate] = useState(false);
+    const [subjectDescription, setSubjectDescription] = useState(""); 
     const [puzzleResult, setPuzzleResult] = useState("");    // word that user have to find out.
     const [category, setCategory] = useState("")  // category of result
     const [newQuestion, setNewQusetion] = useState("");   // temp variable that new questions user input
@@ -45,10 +47,11 @@ function MainPlay() {
 
     useEffect(() => {
         initial();
-      }, []);
+    }, []);
 
     const initial = async () => {
         try {
+            // ss
             const response = await axios.post(`${API}/api/questionaire/subject`);
             const res_data = response.data
             if(res_data.success === false) {
@@ -65,39 +68,47 @@ function MainPlay() {
 
     const askInput = (e) => {
         setNewQusetion(e.target.value);
+        if(newQuestion != ""){
+            setInputValudate(false)
+        }
     }
 
     const askTo = async () => {
+        if(newQuestion == ""){
+            setInputValudate(true);
+            return;
+        }
+
         try {
             const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion });
-            alert(JSON.stringify(response.data));
-          } catch (error) {
+            var answer = response.data.answer;
+            answer = answer.replaceAll("\n", "");
+            console.log(answer);
+
+            var tempQuestionaire = userQuestionaire;   
+            var tempCounter = questionCounter;
+            if(tempCounter < 5){
+                tempQuestionaire.part1[tempCounter].question = newQuestion;
+                tempQuestionaire.part1[tempCounter].flag = answer;
+            } else {
+                tempQuestionaire.part2[tempCounter-5].question = newQuestion;
+                tempQuestionaire.part2[tempCounter-5].flag = answer;
+            }
+
+            setQuestionCounter(tempCounter + 1);
+            // setUserQuestionaire(tempQuestionaire);
+            setNewQusetion("");
+            console.log(userQuestionaire);
+        } catch (error) {
             console.log(error);
-          }
+        }               
+        
+    }
 
+    const getResult = async() => {
+        localStorage.setItem("subject", puzzleResult);
+        window.location.href = "/result"
 
-
-        const randomNum = Math.round(Math.random());
-        var tempQuestionaire = userQuestionaire;        
-
-        var tempCounter = questionCounter;
-
-        if(tempCounter < 5){
-            tempQuestionaire.part1[tempCounter].question = newQuestion;
-            if(randomNum === 0){
-                tempQuestionaire.part1[tempCounter].flag = "no";
-            } else {
-                tempQuestionaire.part1[tempCounter].flag = "yes";
-            }
-        } else {
-            tempQuestionaire.part2[tempCounter-5].question = newQuestion;
-            if(randomNum === 0){
-                tempQuestionaire.part2[tempCounter - 5].flag = "no";
-            } else {
-                tempQuestionaire.part2[tempCounter - 5].flag = "yes";
-            }
-        }        
-        setQuestionCounter(tempCounter + 1);
     }
 
     const bonus_question = bonusQ.map((index, num) => (
@@ -132,9 +143,23 @@ function MainPlay() {
             </div>
         </div>  
     ))
+
+    const answertip = puzzleResult.split("").map(element => (
+        element == " " ? <div>
+            <div style={{width:"30px"}}></div>
+        </div>
+        :
+        <div>
+            <img src={blankAnswer} alt="" />
+            {/* <input type="text" maxlength="1" /> */}
+        </div>
+    ));
+   
+    console.log("-----",puzzleResult)
     return(
         <div className="mainplay-content">
             <div className="mainPlay-inner">
+                {subjectDescription}
                 <div className="main-left">
                     <img src={dicePanel} alt="" />
                     <div className="bonusQ-header">
@@ -184,13 +209,14 @@ function MainPlay() {
                     </div>
                     <div style={{display: "inline-block"}}>
                         <div className="asking-container">
-                            <input className="question-input" onChange={askInput} />
+                            <input className="question-input" value={newQuestion} onChange={askInput} />
                             <div className="ask-btn" onClick={askTo}>
                                 <img src={rightArrow} alt="" className='home-arrow-img' /> <span style={{fontWeight:"bold"}}>ask</span>
                             </div>
                         </div>
-                        <h2 className="asking-num">8/10</h2>
+                        <h2 className="asking-num">{questionCounter}/10</h2>
                     </div>
+                    <p className="warning-content" style={{display:inputValudate === true?"block" : "none"}}>input your question</p>
                     <div className="questions-container">
                         <div className="questions-container-inner">
                             {user_questionaire1}
@@ -203,30 +229,10 @@ function MainPlay() {
                     </div>
                     <div className="answer-container">
                         <div className="answers">
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
-                            <div>
-                                <img src={blankAnswer} alt="" />
-                            </div>
+                            {answertip}
                         </div>
                         <div style={{marginTop:"15px"}}>
-                            <div className="ask-btn">
+                            <div className="ask-btn" onClick={getResult}>
                                 <img src={rightArrow} alt="" className='home-arrow-img' /> <span style={{fontWeight:"bold"}}>answer</span>
                             </div>
                         </div>

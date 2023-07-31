@@ -5,6 +5,7 @@ import Header from "./components/include/header";
 import Explaination from './components/explaination/Explaination';
 import Dice from './components/play/Dice';
 import MainPlay from './components/play/MainPlay';
+import Result from './components/play/Result';
 import Footer from './components/include/footer';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -18,6 +19,7 @@ function App() {
           <Route path="/howtoplay" element={<Explaination/>} />
           <Route path="/dice" element={<Dice/>} />
           <Route path="/play" element={<MainPlay/>} />
+          <Route path="/result" element={<Result/>} />
           <Route component={<>asdfasdf</>}/>
         </Routes>
       </Router>

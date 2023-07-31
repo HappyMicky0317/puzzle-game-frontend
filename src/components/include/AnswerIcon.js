@@ -3,7 +3,7 @@ function AnswerIcon(props) {
         border: "solid 2px #000",
         width: "40px",
         height: "40px",
-        backgroundColor:props.correctness === "yes" ? "#18ce2e" : "#f00",
+        backgroundColor:String(props.correctness) === "Yes" ? "#18ce2e" : "#f00",
         textAlign: "center",
         display:"flex",
         alignItems:"center",
@@ -12,7 +12,7 @@ function AnswerIcon(props) {
 
     return(
         <div style={styles}>
-            <p className="main-font" style={{color:"white", margin:"auto"}}>{props.correctness}</p>
+            <p className="main-font" style={{color:"white", margin:"auto"}}>{String(props.correctness)}</p>
         </div>
     )
 }

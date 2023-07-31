@@ -1,0 +1,46 @@
+.answer-header{
+    background-color: #18ce2e;
+    border: solid 2px #000;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 40px;
+    width: fit-content;
+}
+.answer-name{
+    font-size: 25px;
+}
+.answer-containers{
+    display: flex;
+    background-color: transparent;
+    border: none;
+    margin-top: 0px;
+    padding: 10px 40px 10px 40px
+}
+.answer-letter{
+    width: 35px;
+    height: 35px;
+    background-color: #000;
+    color: #18ce2e;
+    font-size: 20px;
+    padding-top: 3px;
+    margin-left: 2px;
+    border-radius: 5px;
+}
+.answer-description{
+    background-color: transparent;
+    border: solid 2px #000;
+    border-radius: 70px;
+    width: 70%;
+    margin: auto;
+    margin-top: 40px;
+}
+.answer-img{
+    width: 300px;
+}
+.description{
+    color: #000;
+    margin-top: 20px;
+}
+.widipedia-link{
+    border: none;
+}
