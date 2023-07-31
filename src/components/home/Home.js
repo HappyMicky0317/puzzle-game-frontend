@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import '../../assets/css/home/home.css';
-import title from "../../assets/img/header-mainpage.png";
+import title from "../../assets/video/videoLogo.mp4";
 import dice from "../../assets/img/dice.png"
 
 function Home(){
+  const vidRef=useRef();
+  useEffect(() => { vidRef.current.play(); },[]);
   return(
     <div className="content-format">
       <div style={{textAlign:"center"}}>
-        <div style={{textAlign:"center"}}>
-          <img src={title} alt="" className='header-title' />
+        <div style={{textAlign:"center"}} className='logo-part'>
+          <video controls style={{width:"300px"}} id="video-bg" muted ref={ vidRef } loop>
+            <source src={title} type="video/mp4" />
+          </video>
         </div>
         <h3 style={{marginTop:"50px"}}>it's anyone's guess</h3>
         <p className='main-font' style={{marginTop:"50px"}}>each day we'll give you 10 chances to solve our mystery answer.</p>
