@@ -8,17 +8,49 @@ import blankAnswer from "../../assets/img/blank-answer-icon.png";
 
 import { API } from '../../constants';
 
+import useCountdown from "../../hook/useCountdown";
 
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function MainPlay() {
+    const [minutes1, setMinutes1] = useState(1);
+    const [minutes2, setMinutes2] = useState(0);
+    const [seconds1, setSeconds1] = useState(0);
+    const [seconds2, setSeconds2] = useState(0);
     const [inputValudate, setInputValudate] = useState(false);
-    const [subjectDescription, setSubjectDescription] = useState(""); 
+    // const [subjectDescription, setSubjectDescription] = useState(""); 
     const [puzzleResult, setPuzzleResult] = useState("");    // word that user have to find out.
     const [category, setCategory] = useState("")  // category of result
     const [newQuestion, setNewQusetion] = useState("");   // temp variable that new questions user input
     const [questionCounter, setQuestionCounter] = useState(0);   // counter integer that number of user asked.
+
+    const timer = useCountdown(599);
+    useEffect(()=>{
+        var tempMin1 = minutes1;
+        var tempMin2 = minutes2;
+        var tempSec1 = seconds1;
+        var tempSec2 = seconds2;
+
+        tempSec2 = tempSec2 - 1;
+        if(tempSec2 == -1){
+            tempSec2 = 9;
+            tempSec1 = tempSec1 - 1;
+            if(tempSec1 == -1) {
+                tempSec1 = 5;
+                tempMin2 = tempMin2 - 1;
+                if(tempMin2 == -1){
+                    tempMin2 = 9;
+                    tempMin1 = tempMin1 - 1;
+                }
+            }
+        }
+        setMinutes1(tempMin1);
+        setMinutes2(tempMin2);
+        setSeconds1(tempSec1);
+        setSeconds2(tempSec2);
+    }, [timer])
+
     const [bonusQ, setBonusQ] = useState([       // bonus clues that user received by rolling dice
         {"question" : "is it alive?", "flag" : "yes"},
         {"question" : "is it human?", "flag" : "yes"},
@@ -155,11 +187,9 @@ function MainPlay() {
         </div>
     ));
    
-    console.log("-----",puzzleResult)
     return(
         <div className="mainplay-content">
             <div className="mainPlay-inner">
-                {subjectDescription}
                 <div className="main-left">
                     <img src={dicePanel} alt="" />
                     <div className="bonusQ-header">
@@ -200,11 +230,11 @@ function MainPlay() {
                             remaining&nbsp; time
                         </div>
                         <div className="timer">
-                            <div className="time-panel">1</div>
-                            <div className="time-panel">1</div>
+                            <div className="time-panel">{minutes1}</div>
+                            <div className="time-panel">{minutes2}</div>
                             <div className="time-panel">:</div>
-                            <div className="time-panel">1</div>
-                            <div className="time-panel">1</div>
+                            <div className="time-panel">{seconds1}</div>
+                            <div className="time-panel">{seconds2}</div>
                         </div>
                     </div>
                     <div style={{display: "inline-block"}}>
