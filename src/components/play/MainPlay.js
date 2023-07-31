@@ -14,12 +14,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function MainPlay() {
+    // for control timers
     const [minutes1, setMinutes1] = useState(1);
     const [minutes2, setMinutes2] = useState(0);
     const [seconds1, setSeconds1] = useState(0);
     const [seconds2, setSeconds2] = useState(0);
+    const [activeAsk, setActiveAsk] = useState(true); // for control state of asking
     const [inputValudate, setInputValudate] = useState(false);
-    // const [subjectDescription, setSubjectDescription] = useState(""); 
+    
+    const [resultMessage, setResultMessage] = useState("");
+    const [timeUpMessage, setTimeUpMessage] = useState("");
+    const [allAskedMessage, setAllAskedMEssage] = useState("");
+
     const [puzzleResult, setPuzzleResult] = useState("");    // word that user have to find out.
     const [category, setCategory] = useState("")  // category of result
     const [newQuestion, setNewQusetion] = useState("");   // temp variable that new questions user input
@@ -49,6 +55,10 @@ function MainPlay() {
         setMinutes2(tempMin2);
         setSeconds1(tempSec1);
         setSeconds2(tempSec2);
+        if(tempMin1 == 0 && tempMin2 == 0 && tempSec1 == 0 && tempSec2 == 0){
+            setActiveAsk(false);
+            setTimeUpMessage("Time is Up!");
+        }
     }, [timer])
 
     const [bonusQ, setBonusQ] = useState([       // bonus clues that user received by rolling dice
@@ -92,6 +102,7 @@ function MainPlay() {
                 setPuzzleResult(res_data.results[0].subject_name);
                 setCategory(res_data.results[0].category_name);
             }
+            console.log(puzzleResult);
             // alert(JSON.stringify(res_data.results[0].category_name));
         } catch (error) {
             console.log(error);
@@ -106,7 +117,7 @@ function MainPlay() {
     }
 
     const askTo = async () => {
-        if(newQuestion == ""){
+        if(newQuestion == "" || activeAsk == false){
             setInputValudate(true);
             return;
         }
@@ -128,6 +139,10 @@ function MainPlay() {
             }
 
             setQuestionCounter(tempCounter + 1);
+            if(tempCounter == 10){
+                setActiveAsk(false);
+                setAllAskedMEssage("You can't ask aymore! Please input your answer.")
+            }
             // setUserQuestionaire(tempQuestionaire);
             setNewQusetion("");
             console.log(userQuestionaire);
@@ -138,8 +153,26 @@ function MainPlay() {
     }
 
     const getResult = async() => {
-        localStorage.setItem("subject", puzzleResult);
-        window.location.href = "/result"
+        var length = puzzleResult.length;
+        console.log(length);
+        var user_input = ""
+        for(var i = 0 ; i < length ; i++){
+            if(document.getElementById("input" + i).value != ""){
+                user_input = user_input + document.getElementById("input" + i).value;
+            } else {
+                user_input = user_input + " ";
+            }
+        }
+        if(user_input.toLowerCase() == puzzleResult.toLowerCase()){
+            setResultMessage("Correct answer!")
+        } else {
+            setResultMessage("Incorrect Answer!");
+        }
+        setActiveAsk(false)
+        console.log(user_input);
+        // var input = document.getElementById("")
+        // localStorage.setItem("subject", puzzleResult);
+        // window.location.href = "/result"
 
     }
 
@@ -176,16 +209,39 @@ function MainPlay() {
         </div>  
     ))
 
-    const answertip = puzzleResult.split("").map(element => (
+    // making and hangle user inputs
+    const inputRefs = useRef([]);
+
+    const handleKeyDown = (event, index) => {
+        if (event.target.value.length === 1) {
+        event.preventDefault();
+        inputRefs.current[index + 1]?.focus();
+        }
+    };
+    const answertip = puzzleResult.split("").map((element, num) => (
         element == " " ? <div>
-            <div style={{width:"30px"}}></div>
+            <div style={{width:"30px"}}>
+                <input
+                    id={"input" + num}
+                    maxLength={1}
+                    ref={(el) => (inputRefs.current[num] = el)}
+                    onInput={(event) => handleKeyDown(event, num)} style={{width:"40px",marginLeft:"3px",display:"none"}}
+                />
+            </div>
         </div>
         :
         <div>
-            <img src={blankAnswer} alt="" />
+            {/* <img src={blankAnswer} alt="" /> */}
+            <input
+                id={"input" + num}
+                maxLength={1}
+                ref={(el) => (inputRefs.current[num] = el)}
+                onInput={(event) => handleKeyDown(event, num)} style={{width:"40px",marginLeft:"3px"}}
+            />
             {/* <input type="text" maxlength="1" /> */}
         </div>
     ));
+    ////////////////////////////////////////////////
    
     return(
         <div className="mainplay-content">
@@ -236,6 +292,7 @@ function MainPlay() {
                             <div className="time-panel">{seconds1}</div>
                             <div className="time-panel">{seconds2}</div>
                         </div>
+                        <p className="warning-content" style={{marginLeft:"70px"}}>{timeUpMessage}</p>
                     </div>
                     <div style={{display: "inline-block"}}>
                         <div className="asking-container">
@@ -247,6 +304,7 @@ function MainPlay() {
                         <h2 className="asking-num">{questionCounter}/10</h2>
                     </div>
                     <p className="warning-content" style={{display:inputValudate === true?"block" : "none"}}>input your question</p>
+                    <p className="warning-content">{allAskedMessage}</p>
                     <div className="questions-container">
                         <div className="questions-container-inner">
                             {user_questionaire1}
@@ -257,6 +315,7 @@ function MainPlay() {
                             {user_questionaire2}
                         </div>
                     </div>
+                    <p className="warning-content" style={{marginLeft:"70px"}}>{allAskedMessage}</p>
                     <div className="answer-container">
                         <div className="answers">
                             {answertip}
@@ -267,6 +326,7 @@ function MainPlay() {
                             </div>
                         </div>
                     </div>
+                    <p className="warning-content" style={{marginLeft:"70px"}}>{resultMessage}</p>
                 </div>
             </div>
         </div>
