@@ -49,7 +49,7 @@ function Header(props) {
           </div>
           <div id="myDropdown" class="dropdown-content" style={{display:isMenu? "block" : "none"}}>
             <a href="./">Home</a>
-            <a href="#about">About</a>
+            {/* <a href="#about">About</a> */}
             <a href="./howtoplay">How to play</a>
           </div>
         </div>   

@@ -126,6 +126,9 @@ function MainPlay() {
             const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion });
             var answer = response.data.answer;
             answer = answer.replaceAll("\n", "");
+            answer = answer.replaceAll(".", "");
+            if (answer.slice(0,1) == "Y") answer = "Yes"
+            else answer = "No";
             console.log(answer);
 
             var tempQuestionaire = userQuestionaire;   
@@ -169,10 +172,12 @@ function MainPlay() {
             setResultMessage("Incorrect Answer!");
         }
         setActiveAsk(false)
-        console.log(user_input);
-        // var input = document.getElementById("")
-        // localStorage.setItem("subject", puzzleResult);
-        // window.location.href = "/result"
+        
+        if(resultMessage != ""){
+            var input = document.getElementById("")
+            localStorage.setItem("subject", puzzleResult);
+            window.location.href = "/result"
+        }
 
     }
 
@@ -271,7 +276,6 @@ function MainPlay() {
                                         <p className='main-font' style={{marginTop:"-2px",marginLeft:"10px"}}>category</p>
                                     </div>
                                     <h4 style={{marginTop:"5px"}}>{category}</h4>
-                                    {puzzleResult}
                                 </div>
                             </div>
                             <div>
