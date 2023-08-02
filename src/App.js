@@ -18,7 +18,7 @@ function App() {
           <Route exact path="/" element={<Home/>} />
           <Route path="/howtoplay" element={<Explaination/>} />
           <Route path="/dice" element={<Dice/>} />
-          <Route path="/play" element={<MainPlay/>} />
+          <Route path="/play/:diceResults" element={<MainPlay/>} />
           <Route path="/result" element={<Result/>} />
           <Route component={<>asdfasdf</>}/>
         </Routes>

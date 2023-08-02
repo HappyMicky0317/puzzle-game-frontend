@@ -11,9 +11,13 @@ import { API } from '../../constants';
 import useCountdown from "../../hook/useCountdown";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 
 function MainPlay() {
+
+    const { diceResults } = useParams();
+    const [bonusClues, setBonusClues] = useState(diceResults);
     // for control timers
     const [minutes1, setMinutes1] = useState(1);
     const [minutes2, setMinutes2] = useState(0);
@@ -251,6 +255,7 @@ function MainPlay() {
     return(
         <div className="mainplay-content">
             <div className="mainPlay-inner">
+            {bonusClues}
                 <div className="main-left">
                     <img src={dicePanel} alt="" />
                     <div className="bonusQ-header">
