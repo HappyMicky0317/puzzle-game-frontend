@@ -22,10 +22,16 @@ function Result() {
         setPuzzleResult(localStorage.getItem("subject"))
         try {
             const response = await axios.post(`${API}/api/questionaire/getDescription`, {subject : localStorage.getItem("subject")});
-            var data = response.data.data
-            setPageId(data.pageId);
-            setImageURL(data.image);
-            setDescription(data.description);
+            var data = response.data;
+            if(data.success === true){
+                console.log(data);
+                setPageId(data.pageId);
+                setImageURL(data.image);
+                setDescription(data.extract);
+            }
+            else{
+                alert(data.message);
+            }
         } catch (error) {
             console.log(error);
         }

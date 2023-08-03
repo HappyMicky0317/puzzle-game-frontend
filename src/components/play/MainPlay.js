@@ -43,13 +43,13 @@ function MainPlay() {
         var tempSec2 = seconds2;
 
         tempSec2 = tempSec2 - 1;
-        if(tempSec2 == -1){
+        if(tempSec2 === -1){
             tempSec2 = 9;
             tempSec1 = tempSec1 - 1;
-            if(tempSec1 == -1) {
+            if(tempSec1 === -1) {
                 tempSec1 = 5;
                 tempMin2 = tempMin2 - 1;
-                if(tempMin2 == -1){
+                if(tempMin2 === -1){
                     tempMin2 = 9;
                     tempMin1 = tempMin1 - 1;
                 }
@@ -59,16 +59,16 @@ function MainPlay() {
         setMinutes2(tempMin2);
         setSeconds1(tempSec1);
         setSeconds2(tempSec2);
-        if(tempMin1 == 0 && tempMin2 == 0 && tempSec1 == 0 && tempSec2 == 0){
+        if(tempMin1 === 0 && tempMin2 === 0 && tempSec1 === 0 && tempSec2 === 0){
             setActiveAsk(false);
             setTimeUpMessage("Time is Up!");
         }
     }, [timer])
 
     const [bonusQ, setBonusQ] = useState([       // bonus clues that user received by rolling dice
-        {"question" : "is it alive?", "flag" : "yes"},
-        {"question" : "is it human?", "flag" : "yes"},
-        {"question" : "is it a man?", "flag" : "no"},
+        {"question" : "i", "flag" : ""},
+        {"question" : "", "flag" : ""},
+        {"question" : "", "flag" : ""},
         {"question" : "", "flag" : ""},
         {"question" : "", "flag" : ""},
         {"question" : "", "flag" : ""}
@@ -96,15 +96,35 @@ function MainPlay() {
     }, []);
 
     const initial = async () => {
+        setBonusClues(parseInt(diceResults));
+        var data = {
+            num : bonusClues
+        }
+        // console.log(data)
         try {
             // ss
-            const response = await axios.post(`${API}/api/questionaire/subject`);
+            const response = await axios.post(`${API}/api/questionaire/subject`, data);
             const res_data = response.data
             if(res_data.success === false) {
                 alert(res_data.message)
             } else {
-                setPuzzleResult(res_data.results[0].subject_name);
-                setCategory(res_data.results[0].category_name);
+                console.log(res_data);
+                setPuzzleResult(res_data.subject);
+                setCategory(res_data.category);
+                var bonus = res_data.clues;
+                var temp = [
+                    {"question" : "", "flag" : ""},
+                    {"question" : "", "flag" : ""},
+                    {"question" : "", "flag" : ""},
+                    {"question" : "", "flag" : ""},
+                    {"question" : "", "flag" : ""},
+                    {"question" : "", "flag" : ""}
+                ];
+                for(var i = 0; i < bonus.length; i++){
+                    temp[i].question = bonus[i].question;
+                    temp[i].flag = bonus[i].answer;
+                }
+                setBonusQ(temp);
             }
             console.log(puzzleResult);
             // alert(JSON.stringify(res_data.results[0].category_name));
@@ -121,17 +141,17 @@ function MainPlay() {
     }
 
     const askTo = async () => {
-        if(newQuestion == "" || activeAsk == false){
+        if(newQuestion === "" || activeAsk === false){
             setInputValudate(true);
             return;
         }
 
         try {
-            const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion });
-            var answer = response.data.answer;
-            answer = answer.replaceAll("\n", "");
-            answer = answer.replaceAll(".", "");
-            if (answer.slice(0,1) == "Y") answer = "Yes"
+            const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion, });
+            var answer = response.data;
+            // answer = answer.replaceAll("\n", "");
+            // answer = answer.replaceAll(".", "");
+            if (answer.slice(0,1) === "Y") answer = "Yes"
             else answer = "No";
             console.log(answer);
 
@@ -164,7 +184,7 @@ function MainPlay() {
         console.log(length);
         var user_input = ""
         for(var i = 0 ; i < length ; i++){
-            if(document.getElementById("input" + i).value != ""){
+            if(document.getElementById("input" + i).value !== ""){
                 user_input = user_input + document.getElementById("input" + i).value;
             } else {
                 user_input = user_input + " ";
@@ -191,9 +211,9 @@ function MainPlay() {
                 <p className='main-font' style={{marginTop:"10px"}}>{num + 1}. {index.question}</p>
             </div>
             <div>
-                {index.flag === "" ? <img src={questionIcon} alt="" /> : <AnswerIcon correctness={index.flag} />}
-                
+                {index.flag === "" ? <img src={questionIcon} alt="" /> : <AnswerIcon correctness={index.flag} />}                
             </div>
+            {index.flag}
         </div>  
     ))
 
