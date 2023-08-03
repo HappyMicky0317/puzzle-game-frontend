@@ -39,7 +39,7 @@ function Result() {
     
     const answertip = puzzleResult.split("").map(element => (
         element == " " ? <div>
-            <div style={{width:"30px"}}></div>
+            <div className="word-space"></div>
         </div>
         :
         <div className="answer-letter">{element}</div>

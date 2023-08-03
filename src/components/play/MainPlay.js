@@ -5,6 +5,12 @@ import dicePanel from "../../assets/img/dice-panel.png";
 import questionIcon from "../../assets/img/question-icon.png";
 import rightArrow from "../../assets/img/right-arrow.png";
 import blankAnswer from "../../assets/img/blank-answer-icon.png";
+import dice1 from "../../assets/img/dice1.png";
+import dice2 from "../../assets/img/dice2.png";
+import dice3 from "../../assets/img/dice3.png";
+import dice4 from "../../assets/img/dice4.png";
+import dice5 from "../../assets/img/dice5.png";
+import dice6 from "../../assets/img/dice6.png";
 
 import { API } from '../../constants';
 
@@ -18,6 +24,7 @@ function MainPlay() {
 
     const { diceResults } = useParams();
     const [bonusClues, setBonusClues] = useState(diceResults);
+    const [diceImg, setDiceImg] = useState("");
     // for control timers
     const [minutes1, setMinutes1] = useState(1);
     const [minutes2, setMinutes2] = useState(0);
@@ -73,7 +80,7 @@ function MainPlay() {
         {"question" : "", "flag" : ""},
         {"question" : "", "flag" : ""}
     ]);
-
+    console.log(dice6)
     const [userQuestionaire, setUserQuestionaire] = useState({   // all users's input questions
         "part1":[
             {"question" : "", "flag" : ""},
@@ -92,6 +99,19 @@ function MainPlay() {
     })
 
     useEffect(() => {
+        if ( bonusClues === 1) {
+            setDiceImg(dice1)
+        } else if (bonusClues === 2) {
+            setDiceImg(dice2)
+        }else if (bonusClues === 3) {
+            setDiceImg(dice3)
+        }else if (bonusClues === 4) {
+            setDiceImg(dice4)
+        }else if (bonusClues === 5) {
+            setDiceImg(dice5)
+        }else if (bonusClues === 6) {
+            setDiceImg(dice6)
+        }
         initial();
     }, []);
 
@@ -204,16 +224,15 @@ function MainPlay() {
         }
 
     }
-
+    // console.log(bonusQ);
     const bonus_question = bonusQ.map((index, num) => (
         <div className="per-clues">
-            <div>
+            <div style={{textAlign:"left"}}>
                 <p className='main-font' style={{marginTop:"10px"}}>{num + 1}. {index.question}</p>
             </div>
             <div>
                 {index.flag === "" ? <img src={questionIcon} alt="" /> : <AnswerIcon correctness={index.flag} />}                
             </div>
-            {index.flag}
         </div>  
     ))
 
@@ -238,7 +257,7 @@ function MainPlay() {
         </div>  
     ))
 
-    // making and hangle user inputs
+    // handle user inputs
     const inputRefs = useRef([]);
 
     const handleKeyDown = (event, index) => {
@@ -249,12 +268,12 @@ function MainPlay() {
     };
     const answertip = puzzleResult.split("").map((element, num) => (
         element == " " ? <div>
-            <div style={{width:"30px"}}>
+            <div className="word-space">
                 <input
                     id={"input" + num}
                     maxLength={1}
                     ref={(el) => (inputRefs.current[num] = el)}
-                    onInput={(event) => handleKeyDown(event, num)} style={{width:"40px",marginLeft:"3px",display:"none"}}
+                    onInput={(event) => handleKeyDown(event, num)} className="user-input" style={{display:"none"}}
                 />
             </div>
         </div>
@@ -265,7 +284,7 @@ function MainPlay() {
                 id={"input" + num}
                 maxLength={1}
                 ref={(el) => (inputRefs.current[num] = el)}
-                onInput={(event) => handleKeyDown(event, num)} style={{width:"40px",marginLeft:"3px"}}
+                onInput={(event) => handleKeyDown(event, num)} className="user-input"
             />
             {/* <input type="text" maxlength="1" /> */}
         </div>
@@ -275,9 +294,8 @@ function MainPlay() {
     return(
         <div className="mainplay-content">
             <div className="mainPlay-inner">
-            {bonusClues}
                 <div className="main-left">
-                    <img src={dicePanel} alt="" />
+                    <img src={diceImg} alt="" className="dice-clue-img" />
                     <div className="bonusQ-header">
                         <h4>bonus q's</h4>
                     </div>

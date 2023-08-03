@@ -49,5 +49,11 @@ code {
 }
 .content-format {
   background-color: #fff;
-  padding: 100px 40px 150px 40px;
+  padding: 50px 0 150px 0;
+}
+
+@media (max-width: 499px) {
+  body {
+    padding: 0 20px 0 20px;
+  }
 }

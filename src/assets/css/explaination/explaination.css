@@ -48,3 +48,11 @@
   #video-bg::-webkit-media-controls-current-time-display {
     display: none !important;
   }
+
+  @media (max-width: 499px) {
+    .main-description{
+      margin: 40px 20px;
+      border-radius: 30px;
+      padding: 40px 10px;
+  }
+  }

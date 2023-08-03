@@ -16,7 +16,7 @@ function Explaination() {
               <source src={title} type="video/mp4" />
             </video>
           </div>
-          <h3 style={{marginTop:"50px"}}>how to play</h3>
+          <h3 style={{marginTop:"20px"}}>how to play</h3>
           <div className='main-description'>
               <p className='main-font description'>Each day there is a mystery answer that you must solve. You begin by rolling the dice.
               The face value of the dice will determine the number of bonus clues revealed to help you solve the mystery. You will have 10 additional     pportunities to ask a question that assist you in deducting the answer. You have 10 minutes to decipher the answer. You can obtain a bonus clue by watching a video ad which will reveal the category in which the mystery answer belongs to: i.e. movie celebrity, product, place, etc.</p>

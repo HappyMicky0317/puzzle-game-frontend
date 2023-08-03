@@ -37,10 +37,10 @@ function Header(props) {
       <div className="header-content">
         <div className='header-left'>
           <img src={logo} alt="" className="main-logo" />
-          <div className='home-link'>
+          {/* <div className='home-link'>
             <img src={rightArrow} alt="" className='home-arrow-img' />
             <p className='main-font default-padding' style={{color:"white"}}>Home</p>
-          </div>
+          </div> */}
         </div>  
         <div ref={ref}>     
           <div className='header-menu'>

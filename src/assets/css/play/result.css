@@ -44,3 +44,38 @@
 .widipedia-link{
     border: none;
 }
+.word-space{
+    width: 30px;
+}
+
+
+@media (max-width: 499px) {
+    .answer-letter{
+        width: 17px;
+        height: 17px;
+        background-color: #000;
+        color: #18ce2e;
+        font-size: 9px;
+        padding-top: 3px;
+        margin-left: 1px;
+        border-radius: 5px;
+    }
+    .answer-containers{
+        padding: 10px 10px 10px 10px;
+    }
+    .answer-description{
+        width: 90%;
+        border-radius: 40px;
+    }
+    .answer-img{
+        width: 200px;
+    }
+    .word-space{
+        width: 10px;
+    }
+    .answer-name{
+        font-size: 20px;
+        margin-bottom: 0;
+    }
+
+  }
