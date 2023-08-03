@@ -1,5 +1,6 @@
 import "../../assets/css/play/mainPlay.css";
 import AnswerIcon from "../include/AnswerIcon";
+import ConfettiAnimation from "../include/ConfettiAnimation";
 
 import dicePanel from "../../assets/img/dice-panel.png";
 import questionIcon from "../../assets/img/question-icon.png";
@@ -25,6 +26,7 @@ function MainPlay() {
     const { diceResults } = useParams();
     const [bonusClues, setBonusClues] = useState(diceResults);
     const [diceImg, setDiceImg] = useState("");
+    const [isConfetti, setIsConfetti] = useState(false);
     // for control timers
     const [minutes1, setMinutes1] = useState(1);
     const [minutes2, setMinutes2] = useState(0);
@@ -211,7 +213,8 @@ function MainPlay() {
             }
         }
         if(user_input.toLowerCase() == puzzleResult.toLowerCase()){
-            setResultMessage("Correct answer!")
+            setResultMessage("Correct answer!");
+            setIsConfetti(true);
         } else {
             setResultMessage("Incorrect Answer!");
         }
@@ -376,6 +379,7 @@ function MainPlay() {
                     <p className="warning-content" style={{marginLeft:"70px"}}>{resultMessage}</p>
                 </div>
             </div>
+            {isConfetti && <ConfettiAnimation />}
         </div>
     )
 }
