@@ -47,6 +47,32 @@
 .word-space{
     width: 30px;
 }
+.result-description{
+    border-radius: 30px;
+    padding: 40px 30px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+@media (max-width: 799px) {
+    .answer-letter{
+        width: 23px;
+        height: 26px;
+        background-color: #000;
+        color: #18ce2e;
+        font-size:14px;
+        padding-top: 3px;
+        margin-left: 1px;
+        border-radius: 5px;
+    }
+    .answer-containers{
+        padding: 10px 10px 10px 10px;
+    }
+    .answer-img{
+        width: 250px;
+    }
+
+  }
 
 
 @media (max-width: 499px) {

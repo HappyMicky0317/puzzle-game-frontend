@@ -4,7 +4,7 @@
 }
 .mainPlay-inner{
     display: flex;
-    padding: 30px 50px 30px 10px;
+    padding: 0 50px 0 10px;
 }
 .main-left{
     width: 20%;
@@ -54,7 +54,7 @@
    background-color: #000;
    color: #18ce2e;
    width: fit-content;
-   padding: 10px 40px;
+   padding: 5px 40px;
    font-weight: bold;
    font-size: 30px;
    margin: auto;
@@ -82,7 +82,7 @@
     width: fit-content;
     padding: 20px 40px 20px 40px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 10px;
     display: inline-block;
 }
 .question-input{
@@ -114,7 +114,7 @@
 }
 .questions-container{
     display: flex;
-    padding: 30px 50px;
+    padding: 5px 50px;
 }
 .questions-container-inner{
     border: solid 3px #000;

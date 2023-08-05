@@ -18,8 +18,10 @@ function Result() {
     }, []);
 
     const initial = async () => {
-        // console.log(localStorage.getItem("subject"))
-        setPuzzleResult(localStorage.getItem("subject"))
+        if(!localStorage.getItem("name")){
+            window.location.href = "/user/signin";
+        }
+        setPuzzleResult(localStorage.getItem("subject"));
         try {
             const response = await axios.post(`${API}/api/questionaire/getDescription`, {subject : localStorage.getItem("subject")});
             var data = response.data;
@@ -57,7 +59,7 @@ function Result() {
                         {answertip}
                     </div>
                 </div>
-                <div className='main-description answer-description'>
+                <div className='result-description answer-description'>
                     <img src={imageURL} className="answer-img" />
                     <p className='main-font description'>{description} <a href={"https://en.wikipedia.org/w/index.php?curid=" + pageId} target="_blank" className="widipedia-link">widipedia</a></p>
                 </div>

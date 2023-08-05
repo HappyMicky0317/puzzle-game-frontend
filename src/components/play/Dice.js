@@ -19,6 +19,10 @@ function Dice() {
       const storedIsDiceRolled = localStorage.getItem('isDiceRolled');
       return storedIsDiceRolled ? JSON.parse(storedIsDiceRolled) : false;
     });
+    const [realResults, setRealResults] = useState(() => {
+      const storedRealReaults = localStorage.getItem('realResult');
+      return storedRealReaults ? JSON.parse(storedRealReaults) : 1;
+    });
     const [showModal, setShowModal] = useState(false);
     const [errorReturned, setErrorReturned] = useState("");
 
@@ -34,6 +38,11 @@ function Dice() {
       
     const rollDice = () => {
       initial();
+      if(localStorage.getItem("isDiceRolled")){
+        setErrorReturned("You already rolled dice.");
+        setShowModal(false);
+        setShowModal(true);
+      }
       if (!isDiceRolled) {
         const newDiceTwo = Math.floor(Math.random() * 6) + 1;
         setDiceTwo(newDiceTwo);
@@ -53,14 +62,17 @@ function Dice() {
           newRolledResult = 2;            
         }
         
-        setRolledResult(newRolledResult);
+        setRolledResult(newDiceTwo);
+        setRealResults(newRolledResult)
         setIsDiceRolled(true);
-    
-        localStorage.setItem('diceTwo', newRolledResult);
-        localStorage.setItem('rolledResult', newRolledResult);
+        
+        localStorage.setItem('realResult', newRolledResult);
+        localStorage.setItem('diceTwo', newDiceTwo);
+        localStorage.setItem('rolledResult', newDiceTwo);
         localStorage.setItem('isDiceRolled', true);
 
         setTimeout(() => {
+          localStorage.removeItem('realResult');
           localStorage.removeItem('isDiceRolled');
           localStorage.removeItem('rolledResult');
           localStorage.removeItem('diceTwo');
@@ -76,7 +88,11 @@ function Dice() {
         setShowModal(true);
         return;
       }
-      window.location.href = "/play/" + rolledResult;
+      if(localStorage.getItem("name")){
+        window.location.href = "/play/" + realResults;
+      } else {
+        window.location.href = "/user/signin";
+      }
     }
 
     return (

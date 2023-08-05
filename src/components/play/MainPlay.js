@@ -1,6 +1,7 @@
 import "../../assets/css/play/mainPlay.css";
 import AnswerIcon from "../include/AnswerIcon";
 import ConfettiAnimation from "../include/ConfettiAnimation";
+import Modal from '../include/Modal';
 
 import dicePanel from "../../assets/img/dice-panel.png";
 import questionIcon from "../../assets/img/question-icon.png";
@@ -27,6 +28,8 @@ function MainPlay() {
     const [bonusClues, setBonusClues] = useState(diceResults);
     const [diceImg, setDiceImg] = useState("");
     const [isConfetti, setIsConfetti] = useState(false);
+    const [isAnswered, setIsAnswered] = useState(false);
+    // const [isInputAnswer, setIsInputAnswer] = useState(false);
     // for control timers
     const [minutes1, setMinutes1] = useState(1);
     const [minutes2, setMinutes2] = useState(0);
@@ -34,6 +37,9 @@ function MainPlay() {
     const [seconds2, setSeconds2] = useState(0);
     const [activeAsk, setActiveAsk] = useState(true); // for control state of asking
     const [inputValudate, setInputValudate] = useState(false);
+    // modal management
+    const [showModal, setShowModal] = useState(false);
+    const [errorReturned, setErrorReturned] = useState("");
     
     const [resultMessage, setResultMessage] = useState("");
     const [timeUpMessage, setTimeUpMessage] = useState("");
@@ -118,6 +124,9 @@ function MainPlay() {
     }, []);
 
     const initial = async () => {
+        if(!localStorage.getItem("name")){
+            window.location.href = "/user/signin";
+        }
         setBonusClues(parseInt(diceResults));
         var data = {
             num : bonusClues
@@ -167,6 +176,12 @@ function MainPlay() {
             setInputValudate(true);
             return;
         }
+        if(questionCounter === 10 ){
+            setErrorReturned("You already asked 10 questions.");
+            setShowModal(false);
+            setShowModal(true);
+            return;
+        }
 
         try {
             const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion, });
@@ -190,11 +205,10 @@ function MainPlay() {
             setQuestionCounter(tempCounter + 1);
             if(tempCounter == 10){
                 setActiveAsk(false);
-                setAllAskedMEssage("You can't ask aymore! Please input your answer.")
+                setAllAskedMEssage("You can't ask anymore! Please input your answer.")
             }
             // setUserQuestionaire(tempQuestionaire);
             setNewQusetion("");
-            console.log(userQuestionaire);
         } catch (error) {
             console.log(error);
         }               
@@ -202,30 +216,34 @@ function MainPlay() {
     }
 
     const getResult = async() => {
-        var length = puzzleResult.length;
-        console.log(length);
-        var user_input = ""
-        for(var i = 0 ; i < length ; i++){
-            if(document.getElementById("input" + i).value !== ""){
-                user_input = user_input + document.getElementById("input" + i).value;
-            } else {
-                user_input = user_input + " ";
+        if(isAnswered === false){
+            var length = puzzleResult.length;
+            console.log(length);
+            var user_input = ""
+            for(var i = 0 ; i < length ; i++){
+                if(document.getElementById("input" + i).value !== ""){
+                    user_input = user_input + document.getElementById("input" + i).value;
+                } else {
+                    user_input = user_input + " ";
+                }
             }
-        }
-        if(user_input.toLowerCase() == puzzleResult.toLowerCase()){
-            setResultMessage("Correct answer!");
-            setIsConfetti(true);
+            if(user_input.toLowerCase() === puzzleResult.toLowerCase()){
+                setResultMessage("Correct answer!");
+                setIsConfetti(true);
+            } else {
+                if(user_input.trim().length === 0){
+                    setResultMessage("Input your answer!");
+                    return;
+                } else {
+                    setResultMessage("Incorrect Answer!");
+                }
+            }
+            setActiveAsk(false)
+            setIsAnswered(true);
         } else {
-            setResultMessage("Incorrect Answer!");
+                localStorage.setItem("subject", puzzleResult);
+                window.location.href = "/result";
         }
-        setActiveAsk(false)
-        
-        if(resultMessage != ""){
-            var input = document.getElementById("")
-            localStorage.setItem("subject", puzzleResult);
-            window.location.href = "/result"
-        }
-
     }
     // console.log(bonusQ);
     const bonus_question = bonusQ.map((index, num) => (
@@ -296,6 +314,7 @@ function MainPlay() {
    
     return(
         <div className="mainplay-content">
+            {showModal && <Modal msg={errorReturned} />}
             <div className="mainPlay-inner">
                 <div className="main-left">
                     <img src={diceImg} alt="" className="dice-clue-img" />
@@ -372,7 +391,7 @@ function MainPlay() {
                         </div>
                         <div style={{marginTop:"15px"}}>
                             <div className="ask-btn" onClick={getResult}>
-                                <img src={rightArrow} alt="" className='home-arrow-img' /> <span style={{fontWeight:"bold"}}>answer</span>
+                                <img src={rightArrow} alt="" className='home-arrow-img' /> <span style={{fontWeight:"bold"}}>{isAnswered ? "Description from Wikipedia" : "Check your answer" }</span>
                             </div>
                         </div>
                     </div>
