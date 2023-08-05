@@ -6,6 +6,8 @@ import Explaination from './components/explaination/Explaination';
 import Dice from './components/play/Dice';
 import MainPlay from './components/play/MainPlay';
 import Result from './components/play/Result';
+import Signin from './components/user/Singin';
+import Signup from './components/user/Signup';
 import Footer from './components/include/footer';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -20,6 +22,8 @@ function App() {
           <Route path="/dice" element={<Dice/>} />
           <Route path="/play/:diceResults" element={<MainPlay/>} />
           <Route path="/result" element={<Result/>} />
+          <Route path="/user/signin" element={<Signin/>} />
+          <Route path="/user/signup" element={<Signup/>} />
           <Route component={<>asdfasdf</>}/>
         </Routes>
       </Router>

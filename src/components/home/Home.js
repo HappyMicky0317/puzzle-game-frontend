@@ -7,6 +7,14 @@ import dice from "../../assets/img/dice.png"
 function Home(){
   const vidRef=useRef();
   useEffect(() => { vidRef.current.play(); },[]);
+
+  const play = () => {
+    if(localStorage.getItem('name') === null) {
+      window.location.href = "/user/signin";
+    } else {
+      window.location.href = "/dice";
+    }
+  }
   return(
     <div className="content-format">
       <div style={{textAlign:"center"}}>
@@ -19,7 +27,7 @@ function Home(){
         <p className='main-font' style={{marginTop:"50px"}}>each day we'll give you 10 chances to solve our mystery answer.</p>
         <img src={dice} alt="" className='dice-img' />
         <br />
-        <a href="/dice" className='main-font play-link'>let's play</a>
+        <a href="#" onClick={play} className='main-font play-link'>let's play</a>
       </div>
     </div>
   )

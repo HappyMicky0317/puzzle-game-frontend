@@ -1,34 +1,87 @@
 import "../../assets/css/play/dice.css";
-// import dice from "../../assets/img/dice.png";
+
+import Modal from '../include/Modal';
+
 import rightArrow from "../../assets/img/right-arrow.png";
 import React, { useEffect, useState } from 'react';
 
 function Dice() {
 
-    const [diceTwo, setDiceTwo] = useState(1);
-    const [rolledResult, setRolledResult] = useState(1);
+    const [diceTwo, setDiceTwo] = useState(() => {
+      const storedDiceTwo = localStorage.getItem('diceTwo');
+      return storedDiceTwo ? JSON.parse(storedDiceTwo) : 1;
+    });
+    const [rolledResult, setRolledResult] = useState(() => {
+      const storedRolledResult = localStorage.getItem('rolledResult');
+      return storedRolledResult ? JSON.parse(storedRolledResult) : 1;
+    });
+    const [isDiceRolled, setIsDiceRolled] = useState(() => {
+      const storedIsDiceRolled = localStorage.getItem('isDiceRolled');
+      return storedIsDiceRolled ? JSON.parse(storedIsDiceRolled) : false;
+    });
+    const [showModal, setShowModal] = useState(false);
+    const [errorReturned, setErrorReturned] = useState("");
 
+    useEffect(() => {
+      initial();
+    }, []);
+
+    const initial = () => {
+      if(localStorage.getItem("name") === null) {
+        window.location.href = "/user/signin";
+      }
+    }
+      
     const rollDice = () => {
+      initial();
+      if (!isDiceRolled) {
         const newDiceTwo = Math.floor(Math.random() * 6) + 1;
         setDiceTwo(newDiceTwo);
-        if(newDiceTwo === 1){
-            setRolledResult(1);
-        } else if(newDiceTwo === 2){
-            setRolledResult(5);
-        } else if(newDiceTwo === 3){
-            setRolledResult(6);            
-        } else if(newDiceTwo === 4){
-            setRolledResult(3);            
-        } else if(newDiceTwo === 5){
-            setRolledResult(4);            
-        } else if(newDiceTwo === 6){
-            setRolledResult(2);            
+    
+        let newRolledResult;
+        if (newDiceTwo === 1){
+          newRolledResult = 1;
+        } else if (newDiceTwo === 2){
+          newRolledResult = 5;
+        } else if (newDiceTwo === 3){
+          newRolledResult = 6;            
+        } else if (newDiceTwo === 4){
+          newRolledResult = 3;            
+        } else if (newDiceTwo === 5){
+          newRolledResult = 4;            
+        } else if (newDiceTwo === 6){
+          newRolledResult = 2;            
         }
         
+        setRolledResult(newRolledResult);
+        setIsDiceRolled(true);
+    
+        localStorage.setItem('diceTwo', newRolledResult);
+        localStorage.setItem('rolledResult', newRolledResult);
+        localStorage.setItem('isDiceRolled', true);
+
+        setTimeout(() => {
+          localStorage.removeItem('isDiceRolled');
+          localStorage.removeItem('rolledResult');
+          localStorage.removeItem('diceTwo');
+        }, 100 * 60 * 60);
+      }
     };
+
+    const play = () => {
+      console.log(isDiceRolled);
+      if(isDiceRolled === false) {
+        setErrorReturned("You have to rolled dice firstly.");
+        setShowModal(false);
+        setShowModal(true);
+        return;
+      }
+      window.location.href = "/play/" + rolledResult;
+    }
 
     return (
         <div className="content-format">
+           {showModal && <Modal msg={errorReturned} />}
             <div className="dice-inner">
                 <h3 style={{ marginTop: "50px" }}>Get bonus clues by rolling dice.</h3>
                 <div id="dice2" className={`dice dice-two show-${diceTwo}`}>
@@ -70,7 +123,7 @@ function Dice() {
                     <button onClick={rollDice}>Roll dice!</button>
                 </div>  
                 <div style={{marginTop:"130px"}}>
-                    <a href={"/play/" + rolledResult} className="next-link">find answers <img src={rightArrow} alt="" /> </a>
+                    <a href="#" onClick={play} className="next-link">find answers <img src={rightArrow} alt="" /> </a>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@
 
 
   
-  button {
+  #roll button {
     position: relative;
     top:80px;
     padding: 15px 50px;
@@ -29,7 +29,7 @@
     transition: .3s; 
   }
   
-  button:hover, button:active {
+  #roll button:hover, #roll button:active {
     outline: none;
     background: #50514F;
     cursor: pointer;
