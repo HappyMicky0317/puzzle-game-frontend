@@ -57,6 +57,10 @@ function Header(props) {
     setIsSignin(false);
   }
 
+  const goMypage = () => {
+    window.location.href = "/user/mypage";
+  }
+
   return (
     <div className="inside-header">
       {showModal && <Modal msg={errorReturned} />}
@@ -64,7 +68,7 @@ function Header(props) {
         <div className='header-left'>
           <img src={logo} alt="" className="main-logo" />
           {isSignin ? 
-          <div className='avatar-container'>
+          <div className='avatar-container' onClick={goMypage}>
             <img src={userAvatar} alt="" className='home-arrow-img' />
             <p className='main-font default-padding'>{userName}</p>
           </div>
@@ -78,6 +82,7 @@ function Header(props) {
           <div id="myDropdown" class="dropdown-content" style={{display:isMenu? "block" : "none"}}>
             <a href="/">Home</a>
             <a href="/howtoplay">How to play</a>
+            {isSignin === true ? <a key="h1" href="#" onClick={goMypage}>My Page</a> : <a key="h2" href="/user/signin" style={{display:"none"}}>Sign In</a>}
             {isSignin === true ? <a key="h1" href="#" onClick={signout}>Sign Out</a> : <a key="h2" href="/user/signin">Sign In</a>}
           </div>
         </div>   

@@ -8,6 +8,7 @@ import MainPlay from './components/play/MainPlay';
 import Result from './components/play/Result';
 import Signin from './components/user/Singin';
 import Signup from './components/user/Signup';
+import MyPage from './components/user/MyPage';
 import Footer from './components/include/footer';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/result" element={<Result/>} />
           <Route path="/user/signin" element={<Signin/>} />
           <Route path="/user/signup" element={<Signup/>} />
+          <Route path="/user/mypage" element={<MyPage/>} />
           <Route component={<>asdfasdf</>}/>
         </Routes>
       </Router>

@@ -216,6 +216,7 @@ function MainPlay() {
     }
 
     const getResult = async() => {
+        var score = 0;
         if(isAnswered === false){
             var length = puzzleResult.length;
             console.log(length);
@@ -230,6 +231,7 @@ function MainPlay() {
             if(user_input.toLowerCase() === puzzleResult.toLowerCase()){
                 setResultMessage("Correct answer!");
                 setIsConfetti(true);
+                score = 3
             } else {
                 if(user_input.trim().length === 0){
                     setResultMessage("Input your answer!");
@@ -240,6 +242,10 @@ function MainPlay() {
             }
             setActiveAsk(false)
             setIsAnswered(true);
+            const response = await axios.post(`${API}/api/questionaire/insertresult`, {score:score, email:localStorage.getItem("email")});
+            if(response.data.success === false) {
+                alert(response.data.msg);
+            }
         } else {
                 localStorage.setItem("subject", puzzleResult);
                 window.location.href = "/result";
