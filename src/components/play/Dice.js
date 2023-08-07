@@ -2,8 +2,11 @@ import "../../assets/css/play/dice.css";
 
 import Modal from '../include/Modal';
 
+import { API } from '../../constants';
+
 import rightArrow from "../../assets/img/right-arrow.png";
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Dice() {
 
@@ -72,16 +75,12 @@ function Dice() {
         localStorage.setItem('isDiceRolled', true);
 
         setTimeout(() => {
-          localStorage.removeItem('realResult');
-          localStorage.removeItem('isDiceRolled');
-          localStorage.removeItem('rolledResult');
-          localStorage.removeItem('diceTwo');
+          localStorage.clear();
         }, 100 * 60 * 60);
       }
     };
 
-    const play = () => {
-      console.log(isDiceRolled);
+    const play = async () => {
       if(isDiceRolled === false) {
         setErrorReturned("You have to rolled dice firstly.");
         setShowModal(false);
@@ -89,7 +88,19 @@ function Dice() {
         return;
       }
       if(localStorage.getItem("name")){
-        window.location.href = "/play/" + realResults;
+        var email = localStorage.getItem("email");
+        const response = await axios.post(`${API}/api/users/checkavailable`, {email:email});
+        if(response.data.success === false){
+          alert(response.data.msg)
+        } else if (response.data.success === true){
+          if(response.data.play === false){
+            setErrorReturned("You can play only one in a day.");
+            setShowModal(false);
+            setShowModal(true);
+          } else {
+            window.location.href = "/play/" + realResults;
+          }
+        }
       } else {
         window.location.href = "/user/signin";
       }

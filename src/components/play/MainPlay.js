@@ -231,7 +231,7 @@ function MainPlay() {
             if(user_input.toLowerCase() === puzzleResult.toLowerCase()){
                 setResultMessage("Correct answer!");
                 setIsConfetti(true);
-                score = 3
+                score = 10 * bonusClues;
             } else {
                 if(user_input.trim().length === 0){
                     setResultMessage("Input your answer!");
