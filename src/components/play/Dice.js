@@ -29,11 +29,24 @@ function Dice() {
     const [showModal, setShowModal] = useState(false);
     const [errorReturned, setErrorReturned] = useState("");
 
-    useEffect(() => {
+    useEffect( async () => {
       initial();
+      
+      var email = localStorage.getItem("email");
+      const response = await axios.post(`${API}/api/users/checkavailable`, {email:email});
+      if(response.data.success === false){
+        alert(response.data.msg)
+      } else if (response.data.success === true){
+        if(response.data.play === true){
+          localStorage.removeItem("diceTwo");
+          localStorage.removeItem("realResult");
+          localStorage.removeItem("isDiceRolled");
+          localStorage.removeItem("rolledResult");
+        }
+      }
     }, []);
 
-    const initial = () => {
+    const initial = async () => {
       if(localStorage.getItem("name") === null) {
         window.location.href = "/user/signin";
       }

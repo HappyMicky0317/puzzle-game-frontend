@@ -171,6 +171,12 @@ function MainPlay() {
         }
     }
 
+    const askKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            askTo();
+        }
+    }
+
     const askTo = async () => {
         if(newQuestion === "" || activeAsk === false){
             setInputValudate(true);
@@ -371,7 +377,7 @@ function MainPlay() {
                     </div>
                     <div style={{display: "inline-block"}}>
                         <div className="asking-container">
-                            <input className="question-input" value={newQuestion} onChange={askInput} />
+                            <input className="question-input" value={newQuestion} onChange={askInput} onKeyDown={askKeyPress} />
                             <div className="ask-btn" onClick={askTo}>
                                 <img src={rightArrow} alt="" className='home-arrow-img' /> <span style={{fontWeight:"bold"}}>ask</span>
                             </div>
