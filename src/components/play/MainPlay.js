@@ -3,10 +3,8 @@ import AnswerIcon from "../include/AnswerIcon";
 import ConfettiAnimation from "../include/ConfettiAnimation";
 import Modal from '../include/Modal';
 
-import dicePanel from "../../assets/img/dice-panel.png";
 import questionIcon from "../../assets/img/question-icon.png";
 import rightArrow from "../../assets/img/right-arrow.png";
-import blankAnswer from "../../assets/img/blank-answer-icon.png";
 import dice1 from "../../assets/img/dice1.png";
 import dice2 from "../../assets/img/dice2.png";
 import dice3 from "../../assets/img/dice3.png";
@@ -89,7 +87,6 @@ function MainPlay() {
         {"question" : "", "flag" : ""},
         {"question" : "", "flag" : ""}
     ]);
-    console.log(dice6)
     const [userQuestionaire, setUserQuestionaire] = useState({   // all users's input questions
         "part1":[
             {"question" : "", "flag" : ""},
@@ -133,15 +130,12 @@ function MainPlay() {
         var data = {
             num : bonusClues
         }
-        // console.log(data)
         try {
-            // ss
             const response = await axios.post(`${API}/api/questionaire/subject`, data);
             const res_data = response.data
             if(res_data.success === false) {
                 alert(res_data.message)
             } else {
-                console.log(res_data);
                 setPuzzleResult(res_data.subject);
                 setCategory(res_data.category);
                 var bonus = res_data.clues;
@@ -159,8 +153,6 @@ function MainPlay() {
                 }
                 setBonusQ(temp);
             }
-            console.log(puzzleResult);
-            // alert(JSON.stringify(res_data.results[0].category_name));
         } catch (error) {
             console.log(error);
         }
@@ -184,7 +176,7 @@ function MainPlay() {
 
     const askInput = (e) => {
         setNewQusetion(e.target.value);
-        if(newQuestion != ""){
+        if(newQuestion !== ""){
             setInputValudate(false)
         }
     }
@@ -210,11 +202,8 @@ function MainPlay() {
         try {
             const response = await axios.post(`${API}/api/questionaire/asking`, {subject : puzzleResult, question:newQuestion, });
             var answer = response.data;
-            // answer = answer.replaceAll("\n", "");
-            // answer = answer.replaceAll(".", "");
             if (answer.slice(0,1) === "Y") answer = "Yes"
             else answer = "No";
-            console.log(answer);
 
             var tempQuestionaire = userQuestionaire;   
             var tempCounter = questionCounter;
@@ -227,11 +216,10 @@ function MainPlay() {
             }
 
             setQuestionCounter(tempCounter + 1);
-            if(tempCounter == 10){
+            if(tempCounter === 10){
                 setActiveAsk(false);
                 setAllAskedMEssage("You can't ask anymore! Please input your answer.")
             }
-            // setUserQuestionaire(tempQuestionaire);
             setNewQusetion("");
         } catch (error) {
             console.log(error);
@@ -243,7 +231,6 @@ function MainPlay() {
         var score = 0;
         if(isAnswered === false){
             var length = puzzleResult.length;
-            console.log(length);
             var user_input = ""
             for(var i = 0 ; i < length ; i++){
                 if(document.getElementById("input" + i).value !== ""){
@@ -275,7 +262,6 @@ function MainPlay() {
                 window.location.href = "/result";
         }
     }
-    // console.log(bonusQ);
     const bonus_question = bonusQ.map((index, num) => (
         <div className="per-clues">
             <div style={{textAlign:"left"}}>
@@ -318,7 +304,7 @@ function MainPlay() {
         }
     };
     const answertip = puzzleResult.split("").map((element, num) => (
-        element == " " ? <div>
+        element === " " ? <div>
             <div className="word-space">
                 <input
                     id={"input" + num}
