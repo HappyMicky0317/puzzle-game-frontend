@@ -51,9 +51,13 @@ function Signup() {
       if (data.success === false) {
         alert(data.msg);
       } else {
-        localStorage.setItem("name", data.name);
-        localStorage.setItem("email", data.email);
-        window.location.href = "/dice";
+        if(data.msg) {
+          setEmailVali(data.msg);
+        } else {          
+          localStorage.setItem("name", data.name);
+          localStorage.setItem("email", data.email);
+          window.location.href = "/dice";
+        }
       }
     } catch (error) {
       console.log(error);

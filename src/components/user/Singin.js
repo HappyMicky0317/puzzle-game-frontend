@@ -50,6 +50,7 @@ function Signin() {
         setShowModal(true);
       } else {
         localStorage.setItem("name", data.name);
+        console.log(data.email);
         localStorage.setItem("email", data.email);
         window.location.href = "/";
       }
