@@ -7,6 +7,7 @@ import { API } from "../../constants";
 import rightArrow from "../../assets/img/right-arrow.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+var CryptoJS = require("crypto-js");
 
 function Dice() {
   const [diceTwo, setDiceTwo] = useState(() => {
@@ -114,7 +115,10 @@ function Dice() {
           setShowModal(false);
           setShowModal(true);
         } else {
-          window.location.href = "/play/" + realResults;
+          alert(realResults);
+        var encrypted = CryptoJS.AES.encrypt(String(realResults), 'youngunicornsrunfree');
+        var enc_modified = encrypted.toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32');
+          window.location.href = "/play/" + enc_modified;
         }
       }
     } else {
@@ -166,7 +170,7 @@ function Dice() {
           <button onClick={rollDice}>Roll dice!</button>
         </div>
         <div style={{ marginTop: "130px" }}>
-          <a href="#" onClick={play} className="next-link">
+          <a onClick={play} className="next-link" style={{cursor:"pointer"}}>
             find answers <img src={rightArrow} alt="" />{" "}
           </a>
         </div>

@@ -19,10 +19,16 @@ import useCountdown from "../../hook/useCountdown";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+var CryptoJS = require("crypto-js");
 
 function MainPlay() {
   const { diceResults } = useParams();
-  const [bonusClues, setBonusClues] = useState(diceResults);
+  const [bonusClues, setBonusClues] = useState(() => {   
+    var encrypted = diceResults.toString().replace('xMl3Jk', '+' ).replace('Por21Ld', '/').replace('Ml32', '=');
+    var decrypted = CryptoJS.AES.decrypt(encrypted, "youngunicornsrunfree");
+    var dice_result = String(decrypted).slice(-1);
+    return parseInt(dice_result);
+  });
   const [diceImg, setDiceImg] = useState("");
   const [isConfetti, setIsConfetti] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -130,7 +136,6 @@ function MainPlay() {
     if (!localStorage.getItem("name")) {
       window.location.href = "/user/signin";
     }
-    setBonusClues(parseInt(diceResults));
     var data = {
       num: bonusClues,
     };
