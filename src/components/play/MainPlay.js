@@ -50,31 +50,34 @@ function MainPlay() {
 
   const timer = useCountdown(599);
   useEffect(() => {
-    var tempMin1 = minutes1;
-    var tempMin2 = minutes2;
-    var tempSec1 = seconds1;
-    var tempSec2 = seconds2;
+    if(!isAnswered){
+      var tempMin1 = minutes1;
+      var tempMin2 = minutes2;
+      var tempSec1 = seconds1;
+      var tempSec2 = seconds2;
 
-    tempSec2 = tempSec2 - 1;
-    if (tempSec2 === -1) {
-      tempSec2 = 9;
-      tempSec1 = tempSec1 - 1;
-      if (tempSec1 === -1) {
-        tempSec1 = 5;
-        tempMin2 = tempMin2 - 1;
-        if (tempMin2 === -1) {
-          tempMin2 = 9;
-          tempMin1 = tempMin1 - 1;
+      tempSec2 = tempSec2 - 1;
+      if (tempSec2 === -1) {
+        tempSec2 = 9;
+        tempSec1 = tempSec1 - 1;
+        if (tempSec1 === -1) {
+          tempSec1 = 5;
+          tempMin2 = tempMin2 - 1;
+          if (tempMin2 === -1) {
+            tempMin2 = 9;
+            tempMin1 = tempMin1 - 1;
+          }
         }
       }
-    }
-    setMinutes1(tempMin1);
-    setMinutes2(tempMin2);
-    setSeconds1(tempSec1);
-    setSeconds2(tempSec2);
-    if (tempMin1 === 0 && tempMin2 === 0 && tempSec1 === 0 && tempSec2 === 0) {
-      setActiveAsk(false);
-      setTimeUpMessage("Time is Up!");
+      setMinutes1(tempMin1);
+      setMinutes2(tempMin2);
+      setSeconds1(tempSec1);
+      setSeconds2(tempSec2);
+      if (tempMin1 === 0 && tempMin2 === 0 && tempSec1 === 0 && tempSec2 === 0) {
+        setActiveAsk(false);
+        setTimeUpMessage("Time is Up!");
+        setIsAnswered(true);
+      }
     }
   }, [timer]);
 
@@ -432,12 +435,15 @@ function MainPlay() {
               </p>
             </div>
             <div style={{ display: "inline-block" }}>
-              <div className="asking-container">
+              <div className="asking-container" style={{cursor:isAnswered?"not-allowed" : "auto"}}>
                 <input
                   className="question-input"
                   value={newQuestion}
                   onChange={askInput}
                   onKeyDown={askKeyPress}
+                  // disabled
+                  
+                  style={{pointerEvents:isAnswered?"none":"all"}}
                 />
                 <div className="ask-btn" onClick={askTo}>
                   <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
