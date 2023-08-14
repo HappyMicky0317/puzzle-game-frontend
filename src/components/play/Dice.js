@@ -115,7 +115,6 @@ function Dice() {
           setShowModal(false);
           setShowModal(true);
         } else {
-          alert(realResults);
         var encrypted = CryptoJS.AES.encrypt(String(realResults), 'youngunicornsrunfree');
         var enc_modified = encrypted.toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32');
           window.location.href = "/play/" + enc_modified;
