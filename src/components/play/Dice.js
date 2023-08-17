@@ -10,42 +10,55 @@ import axios from "axios";
 var CryptoJS = require("crypto-js");
 
 function Dice() {
-  const [diceTwo, setDiceTwo] = useState(() => {
-    const storedDiceTwo = localStorage.getItem("diceTwo");
-    return storedDiceTwo ? JSON.parse(storedDiceTwo) : 1;
-  });
-  const [rolledResult, setRolledResult] = useState(() => {
-    const storedRolledResult = localStorage.getItem("rolledResult");
-    return storedRolledResult ? JSON.parse(storedRolledResult) : 1;
-  });
-  const [isDiceRolled, setIsDiceRolled] = useState(() => {
-    const storedIsDiceRolled = localStorage.getItem("isDiceRolled");
-    return storedIsDiceRolled ? JSON.parse(storedIsDiceRolled) : false;
-  });
-  const [realResults, setRealResults] = useState(() => {
-    const storedRealReaults = localStorage.getItem("realResult");
-    return storedRealReaults ? JSON.parse(storedRealReaults) : 1;
-  });
+  const [diceTwo, setDiceTwo] = useState(1);
+  // const [rolledResult, setRolledResult] = useState(() => {
+  //   const storedRolledResult = localStorage.getItem("rolledResult");
+  //   return storedRolledResult ? JSON.parse(storedRolledResult) : 1;
+  // });
+  const [isDiceRolled, setIsDiceRolled] = useState(false);
+  const [realResults, setRealResults] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [errorReturned, setErrorReturned] = useState("");
+  const [isPlayed, setIsPlayed] = useState(false);
 
   useEffect(async () => {
     initial();
-
-    var email = localStorage.getItem("email");
-    const response = await axios.post(`${API}/api/users/checkavailable`, {
-      email: email,
-    });
-    if (response.data.success === false) {
-      alert(response.data.msg);
-    } else if (response.data.success === true) {
-      if (response.data.play === true) {
-        localStorage.removeItem("diceTwo");
-        localStorage.removeItem("realResult");
-        localStorage.removeItem("isDiceRolled");
-        localStorage.removeItem("rolledResult");
+    var dice_validation = await checkDiceAvailable();
+    if(dice_validation.success === false) {
+      var previous_val = dice_validation.previous_val;
+      previous_val = parseInt(previous_val);
+      setRealResults(previous_val);
+      setIsDiceRolled(true);
+      if(previous_val === 1) {
+        setDiceTwo(1);
+      } else if (previous_val === 2) {
+        setDiceTwo(5);
+      } else if (previous_val === 3) {
+        setDiceTwo(6);
+      } else if (previous_val === 4) {
+        setDiceTwo(3);
+      } else if (previous_val === 5) {
+        setDiceTwo(4);
+      } else if (previous_val === 6) {
+        setDiceTwo(2);
       }
+    } else {
+      // alert("Dffd")
     }
+
+    // var email = localStorage.getItem("email");
+    // const response = await axios.post(`${API}/api/users/checkavailable`, {
+    //   email: email,
+    // });
+    // if (response.data.success === false) {
+    //   alert(response.data.msg);
+    // } else if (response.data.success === true) {
+    //   if (response.data.play === true) {
+    //     localStorage.removeItem("diceTwo");
+    //     localStorage.removeItem("realResult");
+    //     localStorage.removeItem("isDiceRolled");
+    //   }
+    // }
   }, []);
 
   const initial = async () => {
@@ -54,14 +67,48 @@ function Dice() {
     }
   };
 
-  const rollDice = () => {
-    initial();
-    if (localStorage.getItem("isDiceRolled")) {
-      setErrorReturned("You already rolled dice.");
-      setShowModal(false);
-      setShowModal(true);
+  const checkPlayAvailable = async () => {
+    var email = localStorage.getItem("email");
+    const response = await axios.post(`${API}/api/users/checkavailable`,  {
+      email: email,
+    });
+    if (response.data.success === false) {
+      alert(response.data.msg);
+    } else if (response.data.success === true) {
+      if (response.data.play === false) {
+        setIsPlayed(true);
+      }
     }
-    if (!isDiceRolled) {
+  };
+
+  const checkDiceAvailable = async () => {
+    var email = localStorage.getItem("email");
+    const response = await axios.post(`${API}/api/users/checkdiceAvailable`,  {
+      email: email,
+    });
+    return response.data;
+  }
+
+  const rollDice = async () => {
+    initial();
+    
+      if (isDiceRolled) {
+        // alert("Dfdf")
+        setShowModal(false);
+        setShowModal(true);
+        setErrorReturned("");
+        setErrorReturned("You already rolled dice.");
+        return;
+      }
+    // if(isPlayed === true){
+    //   setErrorReturned("You can play only one in a day.");
+    //   setShowModal(false);
+    //   setShowModal(true);
+    // }
+
+
+
+    // if (!isDiceRolled) {
       const newDiceTwo = Math.floor(Math.random() * 6) + 1;
       setDiceTwo(newDiceTwo);
 
@@ -80,19 +127,26 @@ function Dice() {
         newRolledResult = 2;
       }
 
-      setRolledResult(newDiceTwo);
       setRealResults(newRolledResult);
       setIsDiceRolled(true);
+      var email = localStorage.getItem("email");
+      const response = await axios.post(`${API}/api/users/insertdiceval`, {
+        email: email,
+        result:newRolledResult
+      });
+      if (response.data.success === false) {
+        alert(response.data.msg);
+        return;
+      }
 
       localStorage.setItem("realResult", newRolledResult);
       localStorage.setItem("diceTwo", newDiceTwo);
-      localStorage.setItem("rolledResult", newDiceTwo);
       localStorage.setItem("isDiceRolled", true);
 
       setTimeout(() => {
         localStorage.clear();
       }, 100 * 60 * 60);
-    }
+    // }
   };
 
   const play = async () => {

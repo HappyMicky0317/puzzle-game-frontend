@@ -180,6 +180,7 @@ function MainPlay() {
     } else if (response.data.success === true) {
       if (response.data.play === false) {
         setDayPlayed(false);
+        setIsAnswered(true);
       }
     }
   };

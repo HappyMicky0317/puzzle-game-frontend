@@ -55,6 +55,7 @@ function Header(props) {
     localStorage.removeItem("name");
     localStorage.removeItem("email");
     setIsSignin(false);
+    window.location.href = "/";
   };
 
   const goMypage = () => {
