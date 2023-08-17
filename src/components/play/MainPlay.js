@@ -2,6 +2,7 @@ import "../../assets/css/play/mainPlay.css";
 import AnswerIcon from "../include/AnswerIcon";
 import ConfettiAnimation from "../include/ConfettiAnimation";
 import Modal from "../include/Modal";
+import Loading from "../include/Loading";
 
 import questionIcon from "../../assets/img/question-icon.png";
 import rightArrow from "../../assets/img/right-arrow.png";
@@ -28,6 +29,7 @@ function MainPlay() {
   const [isConfetti, setIsConfetti] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [dayPlayed, setDayPlayed] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   // const [isInputAnswer, setIsInputAnswer] = useState(false);
   // for control timers
   const [minutes1, setMinutes1] = useState(1);
@@ -51,7 +53,7 @@ function MainPlay() {
 
   const timer = useCountdown(599);
   useEffect(() => {
-    if(!isAnswered){
+    if (!isAnswered) {
       var tempMin1 = minutes1;
       var tempMin2 = minutes2;
       var tempSec1 = seconds1;
@@ -121,11 +123,11 @@ function MainPlay() {
 
     // getting dice result
     var email = localStorage.getItem("email");
-    const response = await axios.post(`${API}/api/users/checkdiceAvailable`,  {
+    const response = await axios.post(`${API}/api/users/checkdiceAvailable`, {
       email: email,
     });
     setBonusClues(parseInt(response.data.previous_val));
-    
+
     // set header dice image
     if (parseInt(response.data.previous_val) === 1) {
       setDiceImg(dice1);
@@ -174,6 +176,7 @@ function MainPlay() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   const checkAvailable = async () => {
@@ -371,138 +374,144 @@ function MainPlay() {
 
   return (
     <div>
-      <div
-        className="alert-container"
-        style={{ display: dayPlayed ? "none" : "block" }}
-      >
-        <div className="main-alert">You can Play only one in a day</div>
-        <div
-          className="home-link"
-          onClick={goHome}
-          style={{ margin: "auto", marginTop: "25px" }}
-        >
-          <img src={rightArrow} alt="" className="home-arrow-img" />
-          <p className="main-font default-padding" style={{ color: "white" }}>
-            Home
-          </p>
-        </div>
-      </div>
-      <div className="mainplay-content">
-        {showModal && <Modal msg={errorReturned} />}
-        <div className="mainPlay-inner">
-          <div className="main-left">
-            <img src={diceImg} alt="" className="dice-clue-img" />
-            <div className="bonusQ-header">
-              <h4>bonus q's</h4>
-            </div>
-            <div className="bonus-cluses-container">
-              {bonus_question}
-              <div className="per-clues" style={{ marginTop: "40px" }}>
-                <div>
-                  <p
-                    style={{
-                      marginTop: "0px",
-                      width: "90%",
-                      textAlign: "left",
-                    }}
-                  >
-                    watch a video ad and get a category clue.
-                  </p>
-                </div>
-                <div>
-                  <AnswerIcon correctness="yes" />
-                </div>
-              </div>
-              <div className="per-clues" style={{ marginTop: "40px" }}>
-                <div className="category-container">
-                  <div style={{ width: "fit-content", margin: "auto" }}>
-                    <div className="category-top">
-                      <img src={rightArrow} alt="" className="home-arrow-img" />
-                      <p
-                        className="main-font"
-                        style={{ marginTop: "-2px", marginLeft: "10px" }}
-                      >
-                        category
-                      </p>
-                    </div>
-                    <h4 style={{ marginTop: "5px" }}>{category}</h4>
-                  </div>
-                </div>
-                <div></div>
-              </div>
-            </div>
-          </div>
-          <div className="main-right">
-            <div className="timer-container">
-              <div className="timer-head">remaining&nbsp; time</div>
-              <div className="timer">
-                <div className="time-panel">{minutes1}</div>
-                <div className="time-panel">{minutes2}</div>
-                <div className="time-panel">:</div>
-                <div className="time-panel">{seconds1}</div>
-                <div className="time-panel">{seconds2}</div>
-              </div>
-              <p className="warning-content" style={{ marginLeft: "70px" }}>
-                {timeUpMessage}
+      {isLoading ?
+        <Loading />
+        :
+        <div>
+          <div
+            className="alert-container"
+            style={{ display: dayPlayed ? "none" : "block" }}
+          >
+            <div className="main-alert">You can Play only one in a day</div>
+            <div
+              className="home-link"
+              onClick={goHome}
+              style={{ margin: "auto", marginTop: "25px" }}
+            >
+              <img src={rightArrow} alt="" className="home-arrow-img" />
+              <p className="main-font default-padding" style={{ color: "white" }}>
+                Home
               </p>
             </div>
-            <div style={{ display: "inline-block" }}>
-              <div className="asking-container" style={{cursor:isAnswered?"not-allowed" : "auto"}}>
-                <input
-                  className="question-input"
-                  value={newQuestion}
-                  onChange={askInput}
-                  onKeyDown={askKeyPress}
-                  // disabled
-                  
-                  style={{pointerEvents:isAnswered?"none":"all"}}
-                />
-                <div className="ask-btn" onClick={askTo}>
-                  <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
-                  <span style={{ fontWeight: "bold" }}>ask</span>
+          </div>
+          <div className="mainplay-content">
+            {showModal && <Modal msg={errorReturned} />}
+            <div className="mainPlay-inner">
+              <div className="main-left">
+                <img src={diceImg} alt="" className="dice-clue-img" />
+                <div className="bonusQ-header">
+                  <h4>bonus q's</h4>
+                </div>
+                <div className="bonus-cluses-container">
+                  {bonus_question}
+                  <div className="per-clues" style={{ marginTop: "40px" }}>
+                    <div>
+                      <p
+                        style={{
+                          marginTop: "0px",
+                          width: "90%",
+                          textAlign: "left",
+                        }}
+                      >
+                        watch a video ad and get a category clue.
+                      </p>
+                    </div>
+                    <div>
+                      <AnswerIcon correctness="yes" />
+                    </div>
+                  </div>
+                  <div className="per-clues" style={{ marginTop: "40px" }}>
+                    <div className="category-container">
+                      <div style={{ width: "fit-content", margin: "auto" }}>
+                        <div className="category-top">
+                          <img src={rightArrow} alt="" className="home-arrow-img" />
+                          <p
+                            className="main-font"
+                            style={{ marginTop: "-2px", marginLeft: "10px" }}
+                          >
+                            category
+                          </p>
+                        </div>
+                        <h4 style={{ marginTop: "5px" }}>{category}</h4>
+                      </div>
+                    </div>
+                    <div></div>
+                  </div>
                 </div>
               </div>
-              <h2 className="asking-num">{questionCounter}/10</h2>
-            </div>
-            <p
-              className="warning-content"
-              style={{ display: inputValudate === true ? "block" : "none" }}
-            >
-              input your question
-            </p>
-            <p className="warning-content">{allAskedMessage}</p>
-            <div className="questions-container">
-              <div className="questions-container-inner">
-                {user_questionaire1}
-              </div>
-              <div className="questions-container-padding"></div>
-              <div className="questions-container-inner">
-                {user_questionaire2}
-              </div>
-            </div>
-            <p className="warning-content" style={{ marginLeft: "70px" }}>
-              {allAskedMessage}
-            </p>
-            <div className="answer-container">
-              <div className="answers">{answertip}</div>
-              <div style={{ marginTop: "15px" }}>
-                <div className="ask-btn" onClick={getResult}>
-                  <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
-                  <span style={{ fontWeight: "bold" }}>
-                    {isAnswered
-                      ? "Description from Wikipedia"
-                      : "Check your answer"}
-                  </span>
+              <div className="main-right">
+                <div className="timer-container">
+                  <div className="timer-head">remaining&nbsp; time</div>
+                  <div className="timer">
+                    <div className="time-panel">{minutes1}</div>
+                    <div className="time-panel">{minutes2}</div>
+                    <div className="time-panel">:</div>
+                    <div className="time-panel">{seconds1}</div>
+                    <div className="time-panel">{seconds2}</div>
+                  </div>
+                  <p className="warning-content" style={{ marginLeft: "70px" }}>
+                    {timeUpMessage}
+                  </p>
                 </div>
+                <div style={{ display: "inline-block" }}>
+                  <div className="asking-container" style={{ cursor: isAnswered ? "not-allowed" : "auto" }}>
+                    <input
+                      className="question-input"
+                      value={newQuestion}
+                      onChange={askInput}
+                      onKeyDown={askKeyPress}
+                      // disabled
+
+                      style={{ pointerEvents: isAnswered ? "none" : "all" }}
+                    />
+                    <div className="ask-btn" onClick={askTo}>
+                      <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
+                      <span style={{ fontWeight: "bold" }}>ask</span>
+                    </div>
+                  </div>
+                  <h2 className="asking-num">{questionCounter}/10</h2>
+                </div>
+                <p
+                  className="warning-content"
+                  style={{ display: inputValudate === true ? "block" : "none" }}
+                >
+                  input your question
+                </p>
+                <p className="warning-content">{allAskedMessage}</p>
+                <div className="questions-container">
+                  <div className="questions-container-inner">
+                    {user_questionaire1}
+                  </div>
+                  <div className="questions-container-padding"></div>
+                  <div className="questions-container-inner">
+                    {user_questionaire2}
+                  </div>
+                </div>
+                <p className="warning-content" style={{ marginLeft: "70px" }}>
+                  {allAskedMessage}
+                </p>
+                <div className="answer-container">
+                  <div className="answers">{answertip}</div>
+                  <div style={{ marginTop: "15px" }}>
+                    <div className="ask-btn" onClick={getResult}>
+                      <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        {isAnswered
+                          ? "Description from Wikipedia"
+                          : "Check your answer"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <p className="warning-content" style={{ marginLeft: "70px" }}>
+                  {resultMessage}
+                </p>
               </div>
             </div>
-            <p className="warning-content" style={{ marginLeft: "70px" }}>
-              {resultMessage}
-            </p>
+            {isConfetti && <ConfettiAnimation />}
           </div>
         </div>
-        {isConfetti && <ConfettiAnimation />}
-      </div>
+      }
     </div>
   );
 }

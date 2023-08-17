@@ -62,12 +62,16 @@ function Header(props) {
     window.location.href = "/user/mypage";
   };
 
+  const goHome = () => {
+    window.location.href = "/";
+  }
+
   return (
     <div className="inside-header">
       {showModal && <Modal msg={errorReturned} />}
       <div className="header-content">
         <div className="header-left">
-          <img src={logo} alt="" className="main-logo" />
+          <img onClick={goHome} src={logo} alt="" className="main-logo" style={{cursor:"pointer"}} />
           {isSignin ? (
             <div className="avatar-container" onClick={goMypage}>
               <img src={userAvatar} alt="" className="home-arrow-img" />
