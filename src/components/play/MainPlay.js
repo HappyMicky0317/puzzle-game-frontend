@@ -23,12 +23,7 @@ var CryptoJS = require("crypto-js");
 
 function MainPlay() {
   const { diceResults } = useParams();
-  const [bonusClues, setBonusClues] = useState(() => {   
-    var encrypted = diceResults.toString().replace('xMl3Jk', '+' ).replace('Por21Ld', '/').replace('Ml32', '=');
-    var decrypted = CryptoJS.AES.decrypt(encrypted, "youngunicornsrunfree");
-    var dice_result = String(decrypted).slice(-1);
-    return parseInt(dice_result);
-  });
+  const [bonusClues, setBonusClues] = useState(0);
   const [diceImg, setDiceImg] = useState("");
   const [isConfetti, setIsConfetti] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -89,7 +84,7 @@ function MainPlay() {
 
   const [bonusQ, setBonusQ] = useState([
     // bonus clues that user received by rolling dice
-    { question: "i", flag: "" },
+    { question: "", flag: "" },
     { question: "", flag: "" },
     { question: "", flag: "" },
     { question: "", flag: "" },
@@ -115,19 +110,6 @@ function MainPlay() {
   });
 
   useEffect(() => {
-    if (bonusClues === 1) {
-      setDiceImg(dice1);
-    } else if (bonusClues === 2) {
-      setDiceImg(dice2);
-    } else if (bonusClues === 3) {
-      setDiceImg(dice3);
-    } else if (bonusClues === 4) {
-      setDiceImg(dice4);
-    } else if (bonusClues === 5) {
-      setDiceImg(dice5);
-    } else if (bonusClues === 6) {
-      setDiceImg(dice6);
-    }
     checkAvailable();
     initial();
   }, []);
@@ -136,8 +118,32 @@ function MainPlay() {
     if (!localStorage.getItem("name")) {
       window.location.href = "/user/signin";
     }
+
+    // getting dice result
+    var email = localStorage.getItem("email");
+    const response = await axios.post(`${API}/api/users/checkdiceAvailable`,  {
+      email: email,
+    });
+    setBonusClues(parseInt(response.data.previous_val));
+    
+    // set header dice image
+    if (parseInt(response.data.previous_val) === 1) {
+      setDiceImg(dice1);
+    } else if (parseInt(response.data.previous_val) === 2) {
+      setDiceImg(dice2);
+    } else if (parseInt(response.data.previous_val) === 3) {
+      setDiceImg(dice3);
+    } else if (parseInt(response.data.previous_val) === 4) {
+      setDiceImg(dice4);
+    } else if (parseInt(response.data.previous_val) === 5) {
+      setDiceImg(dice5);
+    } else if (parseInt(response.data.previous_val) === 6) {
+      setDiceImg(dice6);
+    }
+
+    // getting bonus questions
     var data = {
-      num: bonusClues,
+      num: parseInt(response.data.previous_val),
     };
     try {
       const response = await axios.post(

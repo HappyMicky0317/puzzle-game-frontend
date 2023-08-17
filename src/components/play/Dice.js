@@ -23,6 +23,7 @@ function Dice() {
 
   useEffect(async () => {
     initial();
+    checkPlayAvailable();
     var dice_validation = await checkDiceAvailable();
     if(dice_validation.success === false) {
       var previous_val = dice_validation.previous_val;
@@ -32,15 +33,15 @@ function Dice() {
       if(previous_val === 1) {
         setDiceTwo(1);
       } else if (previous_val === 2) {
-        setDiceTwo(5);
-      } else if (previous_val === 3) {
         setDiceTwo(6);
-      } else if (previous_val === 4) {
-        setDiceTwo(3);
-      } else if (previous_val === 5) {
+      } else if (previous_val === 3) {
         setDiceTwo(4);
-      } else if (previous_val === 6) {
+      } else if (previous_val === 4) {
+        setDiceTwo(5);
+      } else if (previous_val === 5) {
         setDiceTwo(2);
+      } else if (previous_val === 6) {
+        setDiceTwo(3);
       }
     } else {
       // alert("Dffd")
@@ -90,25 +91,14 @@ function Dice() {
   }
 
   const rollDice = async () => {
-    initial();
-    
+    initial();    
       if (isDiceRolled) {
-        // alert("Dfdf")
         setShowModal(false);
         setShowModal(true);
         setErrorReturned("");
         setErrorReturned("You already rolled dice.");
         return;
       }
-    // if(isPlayed === true){
-    //   setErrorReturned("You can play only one in a day.");
-    //   setShowModal(false);
-    //   setShowModal(true);
-    // }
-
-
-
-    // if (!isDiceRolled) {
       const newDiceTwo = Math.floor(Math.random() * 6) + 1;
       setDiceTwo(newDiceTwo);
 
@@ -138,15 +128,6 @@ function Dice() {
         alert(response.data.msg);
         return;
       }
-
-      localStorage.setItem("realResult", newRolledResult);
-      localStorage.setItem("diceTwo", newDiceTwo);
-      localStorage.setItem("isDiceRolled", true);
-
-      setTimeout(() => {
-        localStorage.clear();
-      }, 100 * 60 * 60);
-    // }
   };
 
   const play = async () => {
@@ -169,9 +150,7 @@ function Dice() {
           setShowModal(false);
           setShowModal(true);
         } else {
-        var encrypted = CryptoJS.AES.encrypt(String(realResults), 'youngunicornsrunfree');
-        var enc_modified = encrypted.toString().replace('+','xMl3Jk').replace('/','Por21Ld').replace('=','Ml32');
-          window.location.href = "/play/" + enc_modified;
+          window.location.href = "/play";
         }
       }
     } else {
