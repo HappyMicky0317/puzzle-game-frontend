@@ -27,7 +27,7 @@ function Explaination() {
         clearInterval(timer);
       };
     }
-  }, [index]);
+  }, [index, inputText]);
 
   return (
     <div className="content-format">

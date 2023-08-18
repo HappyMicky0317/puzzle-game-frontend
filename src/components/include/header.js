@@ -95,26 +95,26 @@ function Header(props) {
           </div>
           <div
             id="myDropdown"
-            class="dropdown-content"
+            className="dropdown-content"
             style={{ display: isMenu ? "block" : "none" }}
           >
             <a href="/">Home</a>
             <a href="/howtoplay">How to play</a>
             {isSignin === true ? (
-              <a key="h1" href="#" onClick={goMypage}>
+              <a href="/user/mypage" onClick={goMypage}>
                 My Page
               </a>
             ) : (
-              <a key="h2" href="/user/signin" style={{ display: "none" }}>
+              <a href="/user/signin" style={{ display: "none" }}>
                 Sign In
               </a>
             )}
             {isSignin === true ? (
-              <a key="h1" href="#" onClick={signout}>
+              <a href="/" onClick={signout}>
                 Sign Out
               </a>
             ) : (
-              <a key="h2" href="/user/signin">
+              <a href="/user/signin">
                 Sign In
               </a>
             )}

@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import confetti from "canvas-confetti";
 
 const ConfettiAnimation = () => {
   useEffect(() => {
     const duration = 60 * 100;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 20, zIndex: 0 };
 
     function randomInRange(min, max) {
       return Math.random() * (max - min) + min;

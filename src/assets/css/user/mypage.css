@@ -24,16 +24,11 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
+h6 {
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 20px;
 }
 
 .mypage-content a {
@@ -48,10 +43,6 @@ a:hover {
 
 .mypage-content .content {
   padding: 7rem 0;
-}
-
-.mypage-content h2 {
-  font-size: 20px;
 }
 
 .mypage-content .custom-table {

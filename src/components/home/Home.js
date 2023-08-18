@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import "../../assets/css/home/home.css";
 import title from "../../assets/video/videoLogo.mp4";
@@ -38,9 +38,9 @@ function Home() {
         </p>
         <img src={dice} alt="" className="dice-img" />
         <br />
-        <a href="#" onClick={play} className="main-font play-link">
+        <p onClick={play} className="main-font play-link" style={{cursor:"pointer"}}>
           let's play
-        </a>
+        </p>
       </div>
     </div>
   );
