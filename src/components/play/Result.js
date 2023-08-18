@@ -41,7 +41,7 @@ function Result() {
   };
 
   const answertip = puzzleResult.split("").map((element) =>
-    element == " " ? (
+    element === " " ? (
       <div>
         <div className="word-space"></div>
       </div>
@@ -61,12 +61,13 @@ function Result() {
           <div className="answer-containers">{answertip}</div>
         </div>
         <div className="result-description answer-description">
-          <img src={imageURL} className="answer-img" />
+          <img alt="" src={imageURL} className="answer-img" />
           <p className="main-font description">
             {description}{" "}
             <a
               href={"https://en.wikipedia.org/w/index.php?curid=" + pageId}
               target="_blank"
+              rel="noreferrer"
               className="widipedia-link"
             >
               widipedia

@@ -27,6 +27,7 @@ function MyPage() {
 
   const tableContents = rowData.map((index, num) => {
     return (
+      // eslint-disable-next-line jsx-a11y/scope
       <tr scope="row">
         <td>
           {new Date(parseInt(index.time)).getMonth() +

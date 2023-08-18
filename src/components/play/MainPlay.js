@@ -18,12 +18,11 @@ import { API } from "../../constants";
 import useCountdown from "../../hook/useCountdown";
 
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import axios from "axios";
-var CryptoJS = require("crypto-js");
 
 function MainPlay() {
-  const { diceResults } = useParams();
+  // const { diceResults } = useParams();
   const [bonusClues, setBonusClues] = useState(0);
   const [diceImg, setDiceImg] = useState("");
   const [isConfetti, setIsConfetti] = useState(false);
@@ -82,6 +81,7 @@ function MainPlay() {
         setIsAnswered(true);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer]);
 
   const [bonusQ, setBonusQ] = useState([
