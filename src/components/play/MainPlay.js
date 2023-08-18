@@ -180,10 +180,8 @@ function MainPlay() {
           { question: "", flag: "" },
           { question: "", flag: "" },
           { question: "", flag: "" },
-          { question: "", flag: "" },
         ];
         var userq_temp2 = [
-          { question: "", flag: "" },
           { question: "", flag: "" },
           { question: "", flag: "" },
           { question: "", flag: "" },
@@ -243,6 +241,9 @@ function MainPlay() {
   };
 
   const askTo = async () => {
+    if (isAnswered){
+      return;
+    }
     if (newQuestion === "" || activeAsk === false) {
       setInputValudate(true);
       return;
