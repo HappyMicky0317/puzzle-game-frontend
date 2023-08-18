@@ -173,6 +173,36 @@ function MainPlay() {
           temp[i].flag = bonus[i].answer;
         }
         setBonusQ(temp);
+        var userq_data = res_data.userq;
+        var userq_temp1 = [
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+        ];
+        var userq_temp2 = [
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+          { question: "", flag: "" },
+        ];
+        for(var j = 0; j < userq_data.length; j++) {
+          if(j < 5) {
+            userq_temp1[j] = userq_data[j];
+          } else {
+            userq_temp2[j - 5] = userq_data[j];
+          }          
+        }
+        var userq_temp = {
+          part1: userq_temp1,
+          part2: userq_temp2
+        }
+        setUserQuestionaire(userq_temp);
+        setQuestionCounter(userq_data.length);
       }
     } catch (error) {
       console.log(error);
@@ -228,6 +258,7 @@ function MainPlay() {
       const response = await axios.post(`${API}/api/questionaire/asking`, {
         subject: puzzleResult,
         question: newQuestion,
+        email: localStorage.getItem("email")
       });
       var answer = response.data;
       if (answer.slice(0, 1) === "Y") answer = "Yes";
