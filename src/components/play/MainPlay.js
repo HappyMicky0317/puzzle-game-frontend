@@ -146,6 +146,7 @@ function MainPlay() {
     // getting bonus questions
     var data = {
       num: parseInt(response.data.previous_val),
+      email: localStorage.getItem("email")
     };
     try {
       const response = await axios.post(

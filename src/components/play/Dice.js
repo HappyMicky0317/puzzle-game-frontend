@@ -136,7 +136,7 @@ function Dice() {
       setShowModal(true);
       return;
     }
-    if (localStorage.getItem("name")) {
+    if (localStorage.getItem("email")) {
       var email = localStorage.getItem("email");
       const response = await axios.post(`${API}/api/users/checkavailable`, {
         email: email,
