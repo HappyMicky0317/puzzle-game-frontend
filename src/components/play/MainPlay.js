@@ -52,35 +52,46 @@ function MainPlay() {
 
   const timer = useCountdown(599);
   useEffect(() => {
-    if (!isAnswered) {
-      var tempMin1 = minutes1;
-      var tempMin2 = minutes2;
-      var tempSec1 = seconds1;
-      var tempSec2 = seconds2;
+    async function timer () {     
+      if (!isAnswered) {
+        var tempMin1 = minutes1;
+        var tempMin2 = minutes2;
+        var tempSec1 = seconds1;
+        var tempSec2 = seconds2;
 
-      tempSec2 = tempSec2 - 1;
-      if (tempSec2 === -1) {
-        tempSec2 = 9;
-        tempSec1 = tempSec1 - 1;
-        if (tempSec1 === -1) {
-          tempSec1 = 5;
-          tempMin2 = tempMin2 - 1;
-          if (tempMin2 === -1) {
-            tempMin2 = 9;
-            tempMin1 = tempMin1 - 1;
+        tempSec2 = tempSec2 - 1;
+        if (tempSec2 === -1) {
+          tempSec2 = 9;
+          tempSec1 = tempSec1 - 1;
+          if (tempSec1 === -1) {
+            tempSec1 = 5;
+            tempMin2 = tempMin2 - 1;
+            if (tempMin2 === -1) {
+              tempMin2 = 9;
+              tempMin1 = tempMin1 - 1;
+            }
           }
         }
-      }
-      setMinutes1(tempMin1);
-      setMinutes2(tempMin2);
-      setSeconds1(tempSec1);
-      setSeconds2(tempSec2);
-      if (tempMin1 === 0 && tempMin2 === 0 && tempSec1 === 0 && tempSec2 === 0) {
-        setActiveAsk(false);
-        setTimeUpMessage("Time is Up!");
-        setIsAnswered(true);
+        setMinutes1(tempMin1);
+        setMinutes2(tempMin2);
+        setSeconds1(tempSec1);
+        setSeconds2(tempSec2);
+        if (tempMin1 === 0 && tempMin2 === 0 && tempSec1 === 0 && tempSec2 === 0) {
+          setActiveAsk(false);
+          setTimeUpMessage("Time is Up!");
+          const response = await axios.post(
+            `${API}/api/questionaire/insertresult`,
+            { score: 0, email: localStorage.getItem("email") }
+          );
+          if (response.data.success === false) {
+            alert(response.data.msg);
+          }
+          setIsAnswered(true);
+        }
       }
     }
+
+    timer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer]);
 
@@ -117,7 +128,7 @@ function MainPlay() {
   }, []);
 
   const initial = async () => {
-    if (!localStorage.getItem("name")) {
+    if (!localStorage.getItem("email")) {
       window.location.href = "/user/signin";
     }
 
@@ -126,6 +137,14 @@ function MainPlay() {
     const response = await axios.post(`${API}/api/users/checkdiceAvailable`, {
       email: email,
     });
+    if(response.data.success === true){
+      if(response.data.msg === "no user") {
+        localStorage.removeItem("name");
+        localStorage.removeItem("email");
+        window.location.href = "/user/signin";
+        setPuzzleResult("dd");
+      } 
+    }
     setBonusClues(parseInt(response.data.previous_val));
 
     // set header dice image

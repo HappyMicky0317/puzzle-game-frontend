@@ -20,8 +20,8 @@ function Dice() {
 
   useEffect(() => {
     async function fetch() {
-      initial();
-      checkPlayAvailable();
+      await initial();
+      await checkPlayAvailable();
       var dice_validation = await checkDiceAvailable();
       if (dice_validation.success === false) {
         var previous_val = dice_validation.previous_val;
@@ -42,7 +42,11 @@ function Dice() {
           setDiceTwo(3);
         }
       } else {
-        // alert("Dffd")
+        if(dice_validation.msg === "no user"){          
+          localStorage.removeItem("name");
+          localStorage.removeItem("email");
+          window.location.href = "/user/signin";
+        }
       }
 
       // var email = localStorage.getItem("email");
@@ -64,7 +68,7 @@ function Dice() {
   }, []);
 
   const initial = async () => {
-    if (localStorage.getItem("name") === null) {
+    if (localStorage.getItem("email") === null) {
       window.location.href = "/user/signin";
     }
   };

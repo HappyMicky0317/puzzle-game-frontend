@@ -44,6 +44,25 @@ function Header(props) {
     if (name !== null) {
       setUserName(name);
       setIsSignin(true);
+    } else {
+      setIsSignin(false);
+    }
+    var time = localStorage.getItem("time");
+    if(time) {
+      var today = Date.now();
+      var cookie_duration = 60*60*1000*20 // 20 hours
+      if(today - time > cookie_duration) {
+        localStorage.removeItem("name");
+        localStorage.removeItem("email");
+        localStorage.removeItem("time");
+        setIsSignin(false);
+      } 
+
+    } else {
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+      localStorage.removeItem("time");
+      setIsSignin(false);
     }
     // console.log(signed);
   };
@@ -54,6 +73,7 @@ function Header(props) {
     setShowModal(true);
     localStorage.removeItem("name");
     localStorage.removeItem("email");
+    localStorage.removeItem("time");
     setIsSignin(false);
     window.location.href = "/";
   };

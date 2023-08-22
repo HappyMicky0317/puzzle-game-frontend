@@ -53,7 +53,9 @@ function Signup() {
       } else {
         if(data.msg) {
           setEmailVali(data.msg);
-        } else {          
+        } else {   
+          var time = Date.now();
+          localStorage.setItem("time", time);       
           localStorage.setItem("name", data.name);
           localStorage.setItem("email", data.email);
           window.location.href = "/dice";

@@ -49,8 +49,9 @@ function Signin() {
         setShowModal(false);
         setShowModal(true);
       } else {
+        var time = Date.now();
+        localStorage.setItem("time", time);
         localStorage.setItem("name", data.name);
-        console.log(data.email);
         localStorage.setItem("email", data.email);
         window.location.href = "/";
       }
