@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function Dice() {
-  const [diceTwo, setDiceTwo] = useState(1);
+  const [diceTwo, setDiceTwo] = useState(0);
   const [isDiceRolled, setIsDiceRolled] = useState(false);
   // const [realResults, setRealResults] = useState(1);
   const [showModal, setShowModal] = useState(false);
