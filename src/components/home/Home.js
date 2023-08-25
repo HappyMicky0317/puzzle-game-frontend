@@ -18,7 +18,7 @@ function Home() {
     }
   };
   return (
-    <div className="content-format">
+    <div className="content-format content-format-home">
       <div style={{ textAlign: "center" }}>
         <div style={{ textAlign: "center" }} className="logo-part">
           <video
@@ -32,7 +32,7 @@ function Home() {
             <source src={title} type="video/mp4" />
           </video>
         </div>
-        <h3 style={{ marginTop: "50px" }}>it's anyone's guess</h3>
+        <h3>it's anyone's guess</h3>
         <p className="main-font" style={{ marginTop: "50px" }}>
           each day we'll give you 10 chances to solve our mystery answer.
         </p>
