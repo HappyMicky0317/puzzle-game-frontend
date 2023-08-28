@@ -268,10 +268,12 @@
 }
 
 .alert-container {
-  height: 100vh;
+  height: 100%;
   width: 96vw;
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
+  top:0;
+  bottom:0;
   /* display: flex;
     justify-content: center; */
 }

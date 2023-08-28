@@ -5,7 +5,8 @@ import Modal from "../include/Modal";
 import Loading from "../include/Loading";
 
 import questionIcon from "../../assets/img/question-icon.png";
-import rightArrow from "../../assets/img/right-arrow.png";
+// import rightArrow from "../../assets/img/right-arrow.png";
+import rightArrow from "../../assets/img/arrow_right.png";
 import dice1 from "../../assets/img/dice1.png";
 import dice2 from "../../assets/img/dice2.png";
 import dice3 from "../../assets/img/dice3.png";
@@ -432,7 +433,7 @@ function MainPlay() {
       {isLoading ?
         <Loading />
         :
-        <div>
+        <div style={{position:"relative"}}>
           <div
             className="alert-container"
             style={{ display: dayPlayed ? "none" : "block" }}
@@ -521,7 +522,7 @@ function MainPlay() {
                     />
                     <div className="ask-btn" onClick={askTo}>
                       <img src={rightArrow} alt="" className="home-arrow-img" />{" "}
-                      <span style={{ fontWeight: "bold" }}>ask</span>
+                      <span style={{ fontWeight: "bold",marginLeft:"-3px" }}>ask*</span>
                     </div>
                   </div>
                   <h2 className="asking-num">{questionCounter}/10</h2>
@@ -533,7 +534,7 @@ function MainPlay() {
                   input your question
                 </p>
                 <p className="warning-content">{allAskedMessage}</p>
-                <div className="questions-container">
+                <div className="questions-container" style={{marginBottom:"5px"}}>
                   <div className="questions-container-inner">
                     {user_questionaire1}
                   </div>
@@ -542,6 +543,7 @@ function MainPlay() {
                     {user_questionaire2}
                   </div>
                 </div>
+                <span style={{ fontWeight: "bold" }}>*ChatGPT may produce inaccurate information about people, places, or facts.</span>
                 <p className="warning-content" style={{ marginLeft: "70px" }}>
                   {allAskedMessage}
                 </p>
