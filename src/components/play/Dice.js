@@ -171,7 +171,7 @@ function Dice() {
         <div className="content-format">
           {showModal && <Modal msg={errorReturned} />}
           <div className="dice-inner">
-            <h3 style={{ marginTop: "50px" }}>Get bonus clues by rolling dice.</h3>
+            <h3 style={{ marginTop: "50px" }}>Welcome to visit our FlipQ.</h3>
             <div id="dice2" className={`dice dice-two show-${diceTwo}`}>
               <div id="dice-two-side-one" className="side one">
                 <div className="dot one-1"></div>
@@ -208,7 +208,7 @@ function Dice() {
               </div>
             </div>
             <div id="roll" className="roll-button">
-              <button onClick={rollDice}>Roll dice!</button>
+              <button onClick={rollDice}>Click here!</button>
             </div>
             <div style={{ marginTop: "130px" }}>
               <p onClick={play} className="next-link" style={{ cursor: "pointer" }}>
