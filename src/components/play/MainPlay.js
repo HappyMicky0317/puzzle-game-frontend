@@ -400,7 +400,7 @@ function MainPlay() {
   };
   const answertip = puzzleResult.split("").map((element, num) =>
     element === " " ? (
-      <div>
+      <div className="answer-linebreak">
         <div className="word-space">
           <input
             id={"input" + num}
@@ -411,6 +411,7 @@ function MainPlay() {
             style={{ display: "none" }}
           />
         </div>
+        {/* <div className="answer-linebreak"></div> */}
       </div>
     ) : (
       <div>

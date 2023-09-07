@@ -138,13 +138,18 @@
 }
 .answers {
   display: flex;
+  flex-wrap: wrap;
 }
 .user-input {
   width: 40px;
   margin-left: 3px;
+  margin-top: 5px;
 }
 .word-space {
   width: 30px;
+}
+.answer-linebreak{
+  flex-basis: fit-content;
 }
 
 @media (max-width: 1099px) {
@@ -189,6 +194,9 @@
   }
   .answer-container {
     margin-left: -300px;
+  }
+  .answer-linebreak{
+    /* flex-basis: 100%; */
   }
 }
 @media (max-width: 699px) {
@@ -257,7 +265,7 @@
     width: 20px;
   }
 }
-@media (max-width: 399px) {
+/* @media (max-width: 399px) {
   .user-input {
     width: 14px;
     margin-left: 1px;
@@ -265,7 +273,7 @@
   .word-space {
     width: 14px;
   }
-}
+} */
 
 .alert-container {
   height: 100%;
