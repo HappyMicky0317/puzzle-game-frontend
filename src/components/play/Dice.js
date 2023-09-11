@@ -5,7 +5,7 @@ import Loading from "../include/Loading";
 
 import { API } from "../../constants";
 
-import rightArrow from "../../assets/img/right-arrow.png";
+import rightArrow from "../../assets/img/arrow_right.png";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -171,7 +171,7 @@ function Dice() {
         <div className="content-format">
           {showModal && <Modal msg={errorReturned} />}
           <div className="dice-inner">
-            <h3 style={{ marginTop: "50px" }}>Welcome to visit our FlipQ.</h3>
+            <h3 style={{ marginTop: "50px" }}>Welcome to FlipQs.</h3>
             <div id="dice2" className={`dice dice-two show-${diceTwo}`}>
               <div id="dice-two-side-one" className="side one">
                 <div className="dot one-1"></div>
@@ -212,7 +212,7 @@ function Dice() {
             </div>
             <div style={{ marginTop: "130px" }}>
               <p onClick={play} className="next-link" style={{ cursor: "pointer" }}>
-                find answers <img src={rightArrow} alt="" />
+                find answers <img className="home-arrow-img" src={rightArrow} alt="" />
               </p>
             </div>
           </div>

@@ -265,15 +265,16 @@
     width: 20px;
   }
 }
-/* @media (max-width: 399px) {
+@media (max-width: 500px) {
   .user-input {
     width: 14px;
     margin-left: 1px;
+    font-size: 11px;
   }
   .word-space {
     width: 14px;
   }
-} */
+}
 
 .alert-container {
   height: 100%;

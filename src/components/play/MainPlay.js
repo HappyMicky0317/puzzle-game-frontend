@@ -544,7 +544,9 @@ function MainPlay() {
                     {user_questionaire2}
                   </div>
                 </div>
-                <span style={{ fontWeight: "bold" }}>*ChatGPT may produce inaccurate information about people, places, or facts.</span>
+                <span style={{ fontWeight: "bold" }}>*ChatGPT may produce inaccurate information about people, places, or facts.<br/>
+                *ask specific, detailed questions
+                </span>
                 <p className="warning-content" style={{ marginLeft: "70px" }}>
                   {allAskedMessage}
                 </p>
