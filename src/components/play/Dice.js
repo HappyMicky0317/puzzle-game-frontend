@@ -211,9 +211,24 @@ function Dice() {
               <button onClick={rollDice}>Click here!</button>
             </div>
             <div style={{ marginTop: "130px" }}>
-              <p onClick={play} className="next-link" style={{ cursor: "pointer" }}>
+              <h4 onClick={play} className="next-link" style={{ cursor: "pointer" }}>
                 find answers <img className="home-arrow-img" src={rightArrow} alt="" />
-              </p>
+              </h4>
+              {/* <p onClick={play} style={{color:"grey",fontSize:"15px"}}>
+                click here  
+              </p> */}
+              <div class="logo is-animetion">
+                <span>c</span>
+                <span>l</span>
+                <span>i</span>
+                <span>c</span>
+                <span>k</span>
+                <span> &nbsp;</span>
+                <span>h</span>
+                <span>e</span>
+                <span>r</span>
+                <span>e</span>
+              </div>
             </div>
           </div>
         </div>
