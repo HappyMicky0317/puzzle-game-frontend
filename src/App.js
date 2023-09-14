@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Router>
+      <Router basename="/flipqs.games">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/howtoplay" element={<Explaination />} />
