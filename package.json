@@ -48,5 +48,5 @@
   "devDependencies": {
     "gh-pages": "^6.0.0"
   },
-  "homepage": "https://flipqs.games/"
+  "homepage": "puzzle-game-frontend"
 }
