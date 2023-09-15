@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Router>
+      <Router basename="/puzzle-game-frontend">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/howtoplay" element={<Explaination />} />
