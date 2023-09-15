@@ -12,14 +12,14 @@ import MyPage from "./components/user/MyPage";
 import Footer from "./components/include/footer";
 import Default from "./components/Default";
 
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes, Switch } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Router>
-        <Routes>
+        <Switch>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/howtoplay" element={<Explaination />} />
           <Route exact path="/dice" element={<Dice />} />
@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/user/signup" element={<Signup />} />
           <Route exact path="/user/mypage" element={<MyPage />} />
           <Route exact path="*" element={<Default />} />
-        </Routes>
+        </Switch>
       </Router>
       <Footer />
     </div>
