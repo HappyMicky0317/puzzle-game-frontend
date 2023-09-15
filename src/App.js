@@ -28,7 +28,7 @@ function App() {
           <Route exact path="#/user/signin" element={<Signin />} />
           <Route exact path="#/user/signup" element={<Signup />} />
           <Route exact path="#/user/mypage" element={<MyPage />} />
-          <Route exact path="*" element={<Default />} />
+          <Route exact path="#/*" element={<Default />} />
         </Routes>
       </Router>
       <Footer />
