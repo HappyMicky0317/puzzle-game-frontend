@@ -12,22 +12,22 @@ import MyPage from "./components/user/MyPage";
 import Footer from "./components/include/footer";
 import Default from "./components/Default";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Router basename="/puzzle-game-frontend">
+      <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="./howtoplay" element={<Explaination />} />
-          <Route exact path="./dice" element={<Dice />} />
-          <Route exact path="./play" element={<MainPlay />} />
-          <Route exact path="./result" element={<Result />} />
-          <Route exact path="./user/signin" element={<Signin />} />
-          <Route exact path="./user/signup" element={<Signup />} />
-          <Route exact path="./user/mypage" element={<MyPage />} />
+          <Route exact path="/howtoplay" element={<Explaination />} />
+          <Route exact path="/dice" element={<Dice />} />
+          <Route exact path="/play" element={<MainPlay />} />
+          <Route exact path="/result" element={<Result />} />
+          <Route exact path="/user/signin" element={<Signin />} />
+          <Route exact path="/user/signup" element={<Signup />} />
+          <Route exact path="/user/mypage" element={<MyPage />} />
           <Route exact path="*" element={<Default />} />
         </Routes>
       </Router>
