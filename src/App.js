@@ -18,17 +18,17 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Router basename="/puzzle-game-frontend">
+      <Router >
         <Routes>
-          <Route  path="/" element={<Home />} />
-          <Route  path="/howtoplay" element={<Explaination />} />
-          <Route  path="/dice" element={<Dice />} />
-          <Route  path="/play" element={<MainPlay />} />
-          <Route  path="/result" element={<Result />} />
-          <Route  path="/user/signin" element={<Signin />} />
-          <Route  path="/user/signup" element={<Signup />} />
-          <Route  path="/user/mypage" element={<MyPage />} />
-          <Route  path="/*" element={<Default />} />
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/howtoplay" element={<Explaination />} />
+          <Route exact path="/dice" element={<Dice />} />
+          <Route exact path="/play" element={<MainPlay />} />
+          <Route exact path="/result" element={<Result />} />
+          <Route exact path="/user/signin" element={<Signin />} />
+          <Route exact path="/user/signup" element={<Signup />} />
+          <Route exact path="/user/mypage" element={<MyPage />} />
+          <Route exact path="/*" element={<Default />} />
         </Routes>
       </Router>
       <Footer />
