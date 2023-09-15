@@ -12,7 +12,7 @@ import MyPage from "./components/user/MyPage";
 import Footer from "./components/include/footer";
 import Default from "./components/Default";
 
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
