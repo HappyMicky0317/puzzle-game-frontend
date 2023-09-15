@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 
 import Modal from "../include/Modal";
 
+import { ROUTER } from "../../constants";
+
 import "../../assets/css/include/header.css";
 import logo from "../../assets/img/logo.png";
 import userAvatar from "../../assets/img/user_avatar.png";
@@ -75,15 +77,15 @@ function Header(props) {
     localStorage.removeItem("email");
     localStorage.removeItem("time");
     setIsSignin(false);
-    window.location.href = "./";
+    window.location.href = "./" + ROUTER;
   };
 
   const goMypage = () => {
-    window.location.href = "./user/mypage";
+    window.location.href = "./" +  ROUTER + "/user/mypage";
   };
 
   const goHome = () => {
-    window.location.href = "./";
+    window.location.href = "./" + ROUTER;
   }
 
   return (
@@ -118,23 +120,21 @@ function Header(props) {
             className="dropdown-content"
             style={{ display: isMenu ? "block" : "none" }}
           >
-            <a href="./">Home</a>
-            <a href="./howtoplay">How to play</a>
+            <a href={"/" + ROUTER}>Home</a>
+            <a href={"/" +ROUTER + "/howtoplay"}>How to play</a>
             {isSignin === true ? (
-              <a href="./user/mypage" onClick={goMypage}>
+              <a href={"/" +ROUTER + "/user/mypage"} onClick={goMypage}>
                 My Page
               </a>
             ) : (
-              <a href="./user/signin" style={{ display: "none" }}>
-                Sign In
-              </a>
+              ""
             )}
             {isSignin === true ? (
-              <a href="./" onClick={signout}>
+              <a href={"/" +ROUTER + "/"} onClick={signout}>
                 Sign Out
               </a>
             ) : (
-              <a href="./user/signin">
+              <a href={"/" +ROUTER + "/user/signin"}>
                 Sign In
               </a>
             )}
