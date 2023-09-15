@@ -20,14 +20,14 @@ function App() {
       <Header />
       <Router basename="/puzzle-game-frontend">
         <Routes>
-          <Route exact path="#/" element={<Home />} />
-          <Route exact path="#/howtoplay" element={<Explaination />} />
-          <Route exact path="#/dice" element={<Dice />} />
-          <Route exact path="#/play" element={<MainPlay />} />
-          <Route exact path="#/result" element={<Result />} />
-          <Route exact path="#/user/signin" element={<Signin />} />
-          <Route exact path="#/user/signup" element={<Signup />} />
-          <Route exact path="#/user/mypage" element={<MyPage />} />
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/howtoplay" element={<Explaination />} />
+          <Route exact path="/dice" element={<Dice />} />
+          <Route exact path="/play" element={<MainPlay />} />
+          <Route exact path="/result" element={<Result />} />
+          <Route exact path="/user/signin" element={<Signin />} />
+          <Route exact path="/user/signup" element={<Signup />} />
+          <Route exact path="/user/mypage" element={<MyPage />} />
           <Route exact path="*" element={<Default />} />
         </Routes>
       </Router>
