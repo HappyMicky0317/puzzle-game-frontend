@@ -75,15 +75,15 @@ function Header(props) {
     localStorage.removeItem("email");
     localStorage.removeItem("time");
     setIsSignin(false);
-    window.location.href = "#/";
+    window.location.href = "./";
   };
 
   const goMypage = () => {
-    window.location.href = "#/user/mypage";
+    window.location.href = "./user/mypage";
   };
 
   const goHome = () => {
-    window.location.href = "#/";
+    window.location.href = "./";
   }
 
   return (
@@ -118,23 +118,23 @@ function Header(props) {
             className="dropdown-content"
             style={{ display: isMenu ? "block" : "none" }}
           >
-            <a href="#/">Home</a>
-            <a href="#/howtoplay">How to play</a>
+            <a href="./">Home</a>
+            <a href="./howtoplay">How to play</a>
             {isSignin === true ? (
-              <a href="#/user/mypage" onClick={goMypage}>
+              <a href="./user/mypage" onClick={goMypage}>
                 My Page
               </a>
             ) : (
-              <a href="#/user/signin" style={{ display: "none" }}>
+              <a href="./user/signin" style={{ display: "none" }}>
                 Sign In
               </a>
             )}
             {isSignin === true ? (
-              <a href="#/" onClick={signout}>
+              <a href="./" onClick={signout}>
                 Sign Out
               </a>
             ) : (
-              <a href="#/user/signin">
+              <a href="./user/signin">
                 Sign In
               </a>
             )}
