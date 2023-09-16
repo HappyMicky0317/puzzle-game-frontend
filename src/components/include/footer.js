@@ -23,7 +23,7 @@ function Footer() {
             </span>{" "}
             the 
             <span style={{ color: "#bd8e00", fontWeight: "500" }}>
-              a
+            &nbsp;a
             </span>{" "}
             r’tist creation © 2023 all rights reserved
           </p>
