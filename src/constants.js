@@ -1,2 +1,2 @@
-export const API = "http://35.183.37.63:5000";
+export const API = "https://flip-game.onrender.com/";
 export const ROUTER = "puzzle-game-frontend";
